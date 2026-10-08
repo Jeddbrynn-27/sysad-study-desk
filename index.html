@@ -404,7 +404,7 @@
     <section class="view" id="quiz-view" role="tabpanel" aria-labelledby="quiz-tab" tabindex="0">
       <div class="quiz-head">
         <div><p class="section-kicker">Practice / explain every choice</p><h2>Recall the principle. Then understand the trade-off.</h2></div>
-        <div class="quiz-controls"><label for="topic-filter">Question set</label><select id="topic-filter" aria-label="Filter questions by topic"><option value="all">All topics</option></select></div>
+        <div class="quiz-controls"><label for="topic-filter">Question set</label><select id="topic-filter" aria-label="Filter questions by topic"><option value="all">Full quiz (50 MC + 4 essays)</option></select></div>
       </div>
       <div class="quiz-grid" id="quiz-content"></div>
     </section>
@@ -816,7 +816,160 @@
       { topic: 'team', type: 'essay', points: 5, prompt: 'A company is growing from 200 to 800 employees and wants a stable SA model. Describe a support structure that balances local responsiveness with central standards. Include how staffing, escalation, and governance would work.', rationale: 'Strong essays identify ownership, support tiers, staffing strategies, and shared standards without overloading one team.', modelAnswer: 'Use a hybrid model: provide department-facing support contacts who understand local needs, while a central IT organization owns shared infrastructure, security baselines, tooling, and service standards. Size the team using ticket trends, endpoint and server counts, service hours, complexity, and criticality rather than a fixed staff-to-user ratio. A central helpdesk should log and triage requests, resolve common issues, and escalate specialist work through documented ownership and response targets. Review service levels and demand with department representatives so local priorities inform central planning without duplicating core services.' },
       { topic: 'workstations', type: 'essay', points: 5, prompt: 'Explain why a workstation update plan must differ from an initial OS installation. Discuss device reachability, rollback, staged rollout, and user impact in your answer.', rationale: 'Good answers connect update design to active endpoints, risk control, and ongoing service continuity.', modelAnswer: 'An initial OS installation starts from a known build process, but an update changes devices already in use, with active users and potentially different configurations. Roll updates out in stages (one, some, many), monitoring compatibility, failures, and support demand before expanding deployment. Laptops that are offline need retry or endpoint-initiated check-in behavior so they can catch up when reachable. Schedule disruptive work appropriately, notify users, and provide a tested rollback or recovery path for updates that cause problems. Track results so failed or unreachable devices are not mistakenly reported as compliant.' },
       { topic: 'services', type: 'essay', points: 5, prompt: 'A production service is becoming difficult to maintain because it depends on too many custom integrations and manual steps. Explain how service design principles would guide simplification, accountability, and operational stability.', rationale: 'Strong essays explain reducing unnecessary complexity, codifying interfaces, and defining explicit operational ownership.', modelAnswer: 'First document the service requirements, dependencies, owners, and failure modes. Remove integrations and manual hand-offs that do not meet a real requirement, then prefer simple, documented interfaces and open standards where suitable. Assign a named service owner and limit production access to authorized operators using controlled, auditable procedures. Automate repeatable tasks, monitor the service and its dependencies, and test changes before release. Keep recovery and escalation procedures current so a simpler design is also supportable and accountable.' },
-      { topic: 'recovery', type: 'essay', points: 5, prompt: 'Write a short disaster-recovery plan for a critical service. Identify the primary risks, the recovery order, the communication plan, and the validation steps you would require before declaring service restored.', rationale: 'High-scoring responses connect business impact, recovery priorities, tested restores, and disciplined communications.', modelAnswer: 'Assess likely threats and business impact, including regional hazards, infrastructure failure, data loss, and cyber incidents. Define recovery priorities and dependencies with business owners, then restore the most critical service components and data first using protected backups or a geographically separate recovery site as appropriate. Assign incident leadership and authorized spokespeople, with an approval path and regular updates for staff and affected customers. Before declaring recovery complete, verify data integrity, application functionality, access controls, monitoring, and dependent services; record the outcome and follow up on any gaps found during the exercise.' }
+      { topic: 'recovery', type: 'essay', points: 5, prompt: 'Write a short disaster-recovery plan for a critical service. Identify the primary risks, the recovery order, the communication plan, and the validation steps you would require before declaring service restored.', rationale: 'High-scoring responses connect business impact, recovery priorities, tested restores, and disciplined communications.', modelAnswer: 'Assess likely threats and business impact, including regional hazards, infrastructure failure, data loss, and cyber incidents. Define recovery priorities and dependencies with business owners, then restore the most critical service components and data first using protected backups or a geographically separate recovery site as appropriate. Assign incident leadership and authorized spokespeople, with an approval path and regular updates for staff and affected customers. Before declaring recovery complete, verify data integrity, application functionality, access controls, monitoring, and dependent services; record the outcome and follow up on any gaps found during the exercise.' },
+      { topic: 'servers', prompt: 'Why do servers typically require higher-performance I/O subsystems than ordinary workstations?', choices: [
+        { text: 'Servers always run at slower CPU clock speeds.', explanation: 'CPU clock speed does not explain their I/O needs.' },
+        { text: 'I/O demand on a server is proportional to the number of clients it serves.', isCorrect: true, explanation: 'Many clients can generate concurrent storage and network requests, increasing server I/O demand.' },
+        { text: 'Servers render more complex graphics for users.', explanation: 'Graphics rendering is not the typical reason for higher server I/O.' },
+        { text: 'I/O performance has no real effect on server responsiveness.', explanation: 'I/O bottlenecks can significantly affect service response times.' }
+      ]},
+      { topic: 'services', prompt: 'Two competing service designs both meet all stated requirements, but one has noticeably fewer moving parts. Which should the SA generally prefer, and why?', choices: [
+        { text: 'The more complex design, to demonstrate technical sophistication.', explanation: 'Unneeded complexity adds maintenance and failure risk.' },
+        { text: 'Whichever design is cheaper, regardless of complexity.', explanation: 'Cost matters, but reliability and maintainability also matter.' },
+        { text: 'Whichever design the vendor’s sales engineer recommends.', explanation: 'The decision should be based on requirements and operational trade-offs.' },
+        { text: 'The simpler design, because simplicity improves reliability, maintainability, and ease of integration.', isCorrect: true, explanation: 'When requirements are met, fewer unnecessary components generally mean fewer failure points and easier operations.' }
+      ]},
+      { topic: 'team', prompt: 'An infrastructure team is spread across three regional offices, and each office has begun using a different authentication protocol. What is the MOST likely consequence?', choices: [
+        { text: 'Improved redundancy across sites.', explanation: 'Different protocols do not inherently improve redundancy.' },
+        { text: 'Failure to agree on protocols and interfaces, causing interoperability problems.', isCorrect: true, explanation: 'Inconsistent protocols make shared services and cross-site integration more difficult.' },
+        { text: 'Reduced overall staffing costs.', explanation: 'Protocol inconsistency is more likely to increase support effort.' },
+        { text: 'Faster deployment of new services.', explanation: 'Different interfaces usually complicate, rather than speed up, deployment.' }
+      ]},
+      { topic: 'datacenter', prompt: 'A data center is being planned for a region prone to flooding. Where should the SA team AVOID placing it?', choices: [
+        { text: 'The basement.', isCorrect: true, explanation: 'Basements are especially vulnerable to floodwater and can make equipment and power systems inaccessible.' },
+        { text: 'The east wing.', explanation: 'A compass direction alone does not establish flood exposure.' },
+        { text: 'Near the parking area.', explanation: 'Parking proximity is not the primary flood-risk indicator in this scenario.' },
+        { text: 'The top floor.', explanation: 'Elevated locations generally reduce exposure to surface flooding.' }
+      ]},
+      { topic: 'services', prompt: 'A company is scaling a popular internal service and expects continued growth. Which operational consideration should SAs plan for from the START of the design?', choices: [
+        { text: 'Permanently cap the number of users.', explanation: 'An arbitrary cap does not plan for expected growth.' },
+        { text: 'Avoid engaging with any vendors.', explanation: 'Vendor involvement may be appropriate; it is not the core scalability principle.' },
+        { text: 'Ignore growth until it becomes an emergency.', explanation: 'Deferring capacity planning increases the risk of disruption.' },
+        { text: 'Design the service so it can scale without interrupting existing operations.', isCorrect: true, explanation: 'Planning scalability early helps accommodate growth while preserving service continuity.' }
+      ]},
+      { topic: 'servers', prompt: 'For a large fleet of identical servers, which maintenance approach BEST balances cost against repair speed?', choices: [
+        { text: 'No maintenance contract of any kind.', explanation: 'This may reduce upfront cost but can increase repair delays and risk.' },
+        { text: 'An individual same-day contract for every single unit.', explanation: 'This can be unnecessarily expensive for a large fleet of similar systems.' },
+        { text: 'Replacing the entire fleet whenever one unit fails.', explanation: 'Replacing healthy systems is wasteful and does not provide a proportionate repair strategy.' },
+        { text: 'A shared spares kit paired with a lower-cost contract for simple part swaps.', isCorrect: true, explanation: 'Shared spares and staff capable of common swaps can improve repair speed without premium coverage for every host.' }
+      ]},
+      { topic: 'servers', prompt: 'Two servers are both fully active and share the workload; if one fails, the other absorbs its traffic automatically. This describes:', choices: [
+        { text: 'n+1 redundancy.', explanation: 'n+1 provides an extra capacity unit, but the described arrangement specifically shares active workload.' },
+        { text: 'A cold standby configuration.', explanation: 'A cold standby is not fully active and sharing load before failure.' },
+        { text: 'Full redundancy with load sharing.', isCorrect: true, explanation: 'Both systems actively serve traffic, and remaining capacity takes over when one fails.' },
+        { text: 'Manual failover only.', explanation: 'The scenario specifies automatic traffic absorption.' }
+      ]},
+      { topic: 'services', prompt: 'Restricting direct login access to servers hosting a critical service is primarily meant to prevent:', choices: [
+        { text: 'Vendor lock-in.', explanation: 'Access control does not determine vendor portability.' },
+        { text: 'Data center overheating.', explanation: 'Temperature control and monitoring address overheating.' },
+        { text: 'DNS misconfiguration.', explanation: 'DNS configuration is managed separately from host login permissions.' },
+        { text: 'Interactive users from overloading the system.', isCorrect: true, explanation: 'Limiting direct logins prevents general interactive use from consuming resources needed by the service.' }
+      ]},
+      { topic: 'workstations', prompt: 'A dual-boot workstation (Windows/Linux) has been running only Linux for several months. What update risk does this create?', choices: [
+        { text: 'The Windows partition may silently miss critical updates.', isCorrect: true, explanation: 'The Windows installation may not receive patches while it is not booted or otherwise managed.' },
+        { text: 'The Linux partition will automatically corrupt.', explanation: 'Using Linux does not automatically corrupt its partition.' },
+        { text: 'The machine will force a full re-image.', explanation: 'An unused Windows partition does not inherently trigger a re-image.' },
+        { text: 'DHCP leases on the machine will stop renewing.', explanation: 'DHCP lease renewal is unrelated to the dormant Windows installation.' }
+      ]},
+      { topic: 'datacenter', prompt: 'Rear-door heat exchangers are considered more efficient than traditional room-level air conditioning primarily because they:', choices: [
+        { text: 'Cool the entire room evenly regardless of rack layout.', explanation: 'Room-level cooling is less targeted to individual rack exhaust.' },
+        { text: 'Cool only the server exhaust air directly at the rack, avoiding wasted cooling capacity.', isCorrect: true, explanation: 'Capturing heat at the rack reduces mixing and can make cooling more efficient.' },
+        { text: 'Operate without using any electricity.', explanation: 'Heat exchangers still require energy and supporting systems.' },
+        { text: 'Eliminate the need for hot/cold aisle arrangements.', explanation: 'They can complement airflow management rather than eliminate all aisle design needs.' }
+      ]},
+      { topic: 'team', prompt: 'A company wants BOTH standardized service delivery AND responsive, department-specific support. Which customer support model best satisfies both goals?', choices: [
+        { text: 'Fully centralized support only.', explanation: 'This provides standards but may not deliver department-specific relationships.' },
+        { text: 'Fully outsourced support with no internal SAs.', explanation: 'Outsourcing alone does not guarantee internal coordination or local responsiveness.' },
+        { text: 'A hybrid model with dedicated SAs per business unit reporting to a central SA organization.', isCorrect: true, explanation: 'Local SAs provide responsive relationships while central reporting preserves shared standards.' },
+        { text: 'Fully decentralized support only.', explanation: 'This can be responsive locally but risks inconsistent service standards.' }
+      ]},
+      { topic: 'services', prompt: 'A new service must be movable to a different physical server in the future with minimal disruption. Which naming practice should the SA apply?', choices: [
+        { text: 'Hardcode the server’s IP address into every client.', explanation: 'Hardcoded addresses make migrations disruptive.' },
+        { text: 'Use a generic, function-based hostname (e.g., “mail,” “calendar”) instead of a machine-specific name.', isCorrect: true, explanation: 'A stable service name can point to a new host without requiring users or clients to track hardware changes.' },
+        { text: 'Name the server after its physical rack location.', explanation: 'Location-based names couple service identity to specific hardware.' },
+        { text: 'Skip documentation to save setup time.', explanation: 'Documentation supports safe operation and migration.' }
+      ]},
+      { topic: 'workstations', prompt: 'In workstation management, what best distinguishes an update from an upgrade?', choices: [
+        { text: 'An update patches or fixes existing software; an upgrade replaces it with a newer version.', isCorrect: true, explanation: 'Updates generally correct or improve the current version; upgrades move to a newer version or release.' },
+        { text: 'Updates always require a physical site visit; upgrades never do.', explanation: 'Either process may be remote or require hands-on work depending on the environment.' },
+        { text: 'Upgrades are fully automated; updates are always manual.', explanation: 'Automation depends on tooling and policy, not whether the change is an update or upgrade.' },
+        { text: 'There is no real difference between the two.', explanation: 'The terms describe different scopes of software change.' }
+      ]},
+      { topic: 'team', prompt: 'A 500-employee company wants to reduce duplicated IT services and standardize support across all departments. Which funding model should the SA manager recommend?', choices: [
+        { text: 'Decentralized.', explanation: 'Independent departmental funding can duplicate services and standards.' },
+        { text: 'Centralized.', isCorrect: true, explanation: 'Company-wide funding supports shared standards and reduces duplicated infrastructure work.' },
+        { text: 'Per-project funding.', explanation: 'Project funding alone does not establish consistent ongoing support.' },
+        { text: 'Fully outsourced.', explanation: 'Outsourcing is a sourcing choice, not the centralized funding model described.' }
+      ]},
+      { topic: 'servers', prompt: 'Which practice DIRECTLY protects a server against losing its operating system if the boot disk is damaged?', choices: [
+        { text: 'Purchasing any maintenance contract.', explanation: 'A contract may help with repair but does not itself provide a redundant boot copy.' },
+        { text: 'Using desktop-grade hardware.', explanation: 'Desktop hardware does not protect the operating system from a failed boot disk.' },
+        { text: 'Installing a KVM switch.', explanation: 'A KVM provides console access, not boot-disk protection.' },
+        { text: 'Mirroring the boot disk.', isCorrect: true, explanation: 'A mirrored boot disk provides a redundant copy that can help the server continue after a disk failure.' }
+      ]}
+    );
+
+    questions.push(
+      { topic: 'recovery', prompt: 'What is the FIRST step in building a disaster-recovery plan?', choices: [
+        { text: 'Relocating the data center', explanation: 'Relocation is a recovery action, not the starting analysis for the plan.' },
+        { text: 'Purchasing insurance for all equipment', explanation: 'Insurance is an important risk control, but it should follow risk assessment, not replace it.' },
+        { text: 'Performing a risk analysis', isCorrect: true, explanation: 'A risk analysis identifies likely threats, impacts, and priorities before a recovery plan is designed.' },
+        { text: 'Hiring a public-relations firm', explanation: 'Communications support is useful, but it does not establish the plan’s technical and operational priorities.' }
+      ]},
+      { topic: 'datacenter', prompt: 'What is the recommended humidity range to maintain inside a data center?', choices: [
+        { text: '45%-55%', isCorrect: true, explanation: 'This range helps reduce static electricity and corrosion while avoiding condensation or excessive dryness.' },
+        { text: '0%-10%', explanation: 'This range is too dry for a healthy data-center environment.' },
+        { text: '70%-90%', explanation: 'This is too humid and can raise condensation and equipment-corrosion risk.' },
+        { text: '10%-20%', explanation: 'This is still too dry for stable data-center conditions.' }
+      ]},
+      { topic: 'services', prompt: 'According to best practice, what should ALWAYS be the starting point when designing a new IT service?', choices: [
+        { text: 'Customer requirements', isCorrect: true, explanation: 'Requirements define what the service must do, how it supports users, and what trade-offs are acceptable.' },
+        { text: 'The server hardware brand', explanation: 'Hardware is a design choice after the service requirements and constraints are understood.' },
+        { text: 'The marketing plan', explanation: 'Marketing can communicate value, but it should not define the service design itself.' },
+        { text: 'Vendor pricing', explanation: 'Pricing supports cost decisions, but it is not the starting point for service design.' }
+      ]},
+      { topic: 'recovery', prompt: 'During a security breach, an unprepared spokesperson gives conflicting statements to reporters, worsening the crisis. What should have been done differently, per best practice?', choices: [
+        { text: 'Have a PR firm on retainer and a pre-defined media communication plan before any disaster occurs', isCorrect: true, explanation: 'Preparation avoids conflicting, improvised statements during a crisis and supports consistent messaging.' },
+        { text: 'Skip disaster-recovery planning altogether', explanation: 'That leaves the organization without a structured response and communication plan.' },
+        { text: 'Simply deny that the incident occurred', explanation: 'A denial without verified facts can worsen trust and increase confusion.' },
+        { text: 'Allow any employee to speak to the media as they see fit', explanation: 'Uncoordinated communications can increase confusion and reputational damage.' }
+      ]},
+      { topic: 'servers', prompt: 'A company is choosing between fewer expensive, highly reliable servers and many cheaper, more failure-prone ones. Which factor should MOST influence this decision?', choices: [
+        { text: 'The color and branding of the server chassis', explanation: 'Branding is irrelevant to operational resilience and service continuity.' },
+        { text: 'The number of USB ports on each unit', explanation: 'Peripheral ports are not the decisive factor in a resilience decision.' },
+        { text: 'The vendor’s advertising budget', explanation: 'Marketing does not determine whether the hardware fit is operationally safe.' },
+        { text: 'Whether the organization has strong failure-management practices to exploit the savings of cheaper hardware', isCorrect: true, explanation: 'A lower-cost fleet can work if the organization has strong operational controls, capacity, and recovery practices.' }
+      ]},
+      { topic: 'workstations', prompt: 'A company must deploy an identical, standardized configuration to 300 new workstations as quickly as possible. Which method BEST achieves both speed and uniformity?', choices: [
+        { text: 'Manual installation on each machine individually', explanation: 'Manual deployment is slow and increases variation.' },
+        { text: 'The vendor’s default pre-loaded OS', explanation: 'This may be consistent but not necessarily aligned to the organization’s standard build.' },
+        { text: 'Fully automated installation from a standardized image', isCorrect: true, explanation: 'Standardized automation delivers both rapid deployment and consistent configuration.' },
+        { text: 'Partially automated installation with manual follow-up', explanation: 'This slows deployment and leaves more scope for variation.' }
+      ]},
+      { topic: 'services', prompt: 'Which of the following is the STRONGEST justification for outsourcing the system administration function entirely?', choices: [
+        { text: 'System administration is not a core competency, so outsourcing lets the company focus on its core business', isCorrect: true, explanation: 'If system administration is not central to the organization’s purpose, outsourcing can be a rational strategic decision.' },
+        { text: 'Outsourcing removes the need for any customer support', explanation: 'Customer support remains important even if some infrastructure work is outsourced.' },
+        { text: 'System administration is a core competency for every company', explanation: 'This claim is the opposite of the strongest justification.' },
+        { text: 'Outsourcing always provides data security automatically', explanation: 'Outsourcing does not automatically guarantee better security or control.' }
+      ]},
+      { topic: 'servers', prompt: 'Which scenario BEST justifies paying for an on-site technician plus a duplicate standby machine in a maintenance contract?', choices: [
+        { text: 'A highly critical host where downtime is unacceptable and in-house expertise is limited', isCorrect: true, explanation: 'Critical systems with limited local expertise justify stronger response and redundancy coverage.' },
+        { text: 'A workstation used by a single employee', explanation: 'A single-user workstation rarely justifies that level of contract coverage.' },
+        { text: 'A test/development server used occasionally', explanation: 'A lower-impact test server normally does not require a duplicate standby machine.' },
+        { text: 'A single non-critical print server', explanation: 'This is not normally a cost-justified scenario for on-site support plus a duplicate standby host.' }
+      ]},
+      { topic: 'recovery', prompt: 'In this context, what does "data integrity" primarily refer to?', choices: [
+        { text: 'Compressing data to save storage space', explanation: 'Compression reduces size but is not the same as integrity.' },
+        { text: 'Ensuring data is not altered by external or unintended sources', isCorrect: true, explanation: 'Integrity is about data correctness and preventing improper or unintended modification.' },
+        { text: 'Keeping an offsite backup copy only', explanation: 'Backup storage supports recovery, not the correctness of current data.' },
+        { text: 'Encrypting all company data', explanation: 'Encryption protects confidentiality, not necessarily the integrity of changes or content.' }
+      ]},
+      { topic: 'services', prompt: 'A vendor claims to "support an open standard" but adds proprietary extensions that break compatibility with competitors\' products. This practice is best described as:', choices: [
+        { text: 'Genuine open architecture', explanation: 'This is not genuine openness because the proprietary extensions undermine interoperability.' },
+        { text: 'Embrace and extend — undermining real interoperability', isCorrect: true, explanation: 'This tactic appears open while creating dependence on the vendor and breaking compatibility with third-party implementations.' },
+        { text: 'Machine independence', explanation: 'Machine independence is about service design and hardware abstraction, not vendor lock-in through proprietary extensions.' },
+        { text: 'Restricted access control', explanation: 'This is about limiting access, not compatibility manipulation.' }
+      ]}
     );
 
     questions.forEach((question, index) => { question.id = `${question.topic}-${index + 1}`; });
@@ -862,8 +1015,8 @@
     }));
 
     function getQuizTotals() {
-      const mcTotal = questions.filter((question) => question.type !== 'essay').length;
-      const essayTotal = questions.reduce((sum, question) => sum + (question.type === 'essay' ? Number(question.points || 0) : 0), 0);
+      const mcTotal = quizSet.filter((question) => question.type !== 'essay').length;
+      const essayTotal = quizSet.reduce((sum, question) => sum + (question.type === 'essay' ? Number(question.points || 0) : 0), 0);
       const mcCorrect = quizSet.filter((question, index) => question.type !== 'essay' && quizAnswers[index] !== null && question.choices[quizAnswers[index]].isCorrect).length;
       const essayEarned = quizSet.reduce((sum, question, index) => {
         if (question.type !== 'essay') return sum;
@@ -880,7 +1033,7 @@
       document.getElementById('progress-fill').style.width = `${count / topics.length * 100}%`;
       document.querySelector('.progress-track').setAttribute('aria-valuenow', count);
       document.getElementById('progress-label').textContent = count === topics.length ? 'All units complete. Keep the concepts sharp with a quiz.' : `${topics.length - count} ${topics.length - count === 1 ? 'unit' : 'units'} left in your course map.`;
-      document.getElementById('quiz-count').textContent = `(${mcCount} MC + ${essayCount} essays)`;
+      document.getElementById('quiz-count').textContent = `(${mcCount} MC bank · 50/run + ${essayCount} essays)`;
       renderTopicLinks();
     }
     function renderTopicLinks() {
@@ -923,7 +1076,17 @@
       return copy;
     }
     function startQuiz(topicId = filter.value, selectedQuestions = null) {
-      const available = selectedQuestions || questions.filter((question) => topicId === 'all' || question.topic === topicId);
+      let available = selectedQuestions;
+      if (!available) {
+        const matchingQuestions = questions.filter((question) => topicId === 'all' || question.topic === topicId);
+        if (topicId === 'all') {
+          const mcQuestions = shuffle(matchingQuestions.filter((question) => question.type !== 'essay')).slice(0, 50);
+          const essayQuestions = matchingQuestions.filter((question) => question.type === 'essay');
+          available = [...mcQuestions, ...essayQuestions];
+        } else {
+          available = matchingQuestions;
+        }
+      }
       quizSet = shuffle(available).map((question) => question.type === 'essay'
         ? question
         : { ...question, choices: shuffle(question.choices) });
@@ -1026,7 +1189,7 @@
       const missedIds = quizSet.filter((question, index) => question.type !== 'essay' && quizAnswers[index] !== null && !question.choices[quizAnswers[index]].isCorrect).map((question) => question.id);
       const essayAnswered = quizSet.filter((question, index) => question.type === 'essay' && quizAnswers[index] && typeof quizAnswers[index] === 'object' && typeof quizAnswers[index].score === 'number').length;
       const phrase = essayAnswered === quizSet.filter((question) => question.type === 'essay').length ? 'All essays submitted.' : `${essayAnswered} of ${quizSet.filter((question) => question.type === 'essay').length} essay responses submitted.`;
-      document.getElementById('quiz-content').innerHTML = `<div class="empty-state"><p class="section-kicker">Run complete / ${quizSet.length} items</p><h3>You scored ${totalScore} out of ${totalPossible}.</h3><p>${totalScore === totalPossible ? 'Perfect: 50 MC points and 20 essay points are in place.' : `${phrase} ${missedIds.length ? `Review the ${missedIds.length} missed multiple-choice ${missedIds.length === 1 ? 'question' : 'questions'} and refine the essay responses.` : 'Nail down the explanations and try another pass.'}`}</p><div class="question-actions"><button class="quiet-button" id="retry-this" type="button">Retry this set</button>${missedIds.length ? '<button class="primary-button" id="retry-run-missed" type="button">Retry missed questions</button>' : '<button class="primary-button" id="new-run" type="button">New quiz</button>'}</div></div>`;
+      document.getElementById('quiz-content').innerHTML = `<div class="empty-state"><p class="section-kicker">Run complete / ${quizSet.length} items</p><h3>You scored ${totalScore} out of ${totalPossible}.</h3><p>${totalScore === totalPossible ? `Perfect: ${mcTotal} MC points and ${essayTotal} essay points are in place.` : `${phrase} ${missedIds.length ? `Review the ${missedIds.length} missed multiple-choice ${missedIds.length === 1 ? 'question' : 'questions'} and refine the essay responses.` : 'Nail down the explanations and try another pass.'}`}</p><div class="question-actions"><button class="quiet-button" id="retry-this" type="button">Retry this set</button>${missedIds.length ? '<button class="primary-button" id="retry-run-missed" type="button">Retry missed questions</button>' : '<button class="primary-button" id="new-run" type="button">New quiz</button>'}</div></div>`;
       document.getElementById('retry-this').addEventListener('click', () => startQuiz(filter.value));
       const retryMissed = document.getElementById('retry-run-missed');
       if (retryMissed) retryMissed.addEventListener('click', () => startQuiz(filter.value, questions.filter((question) => missedIds.includes(question.id))));
