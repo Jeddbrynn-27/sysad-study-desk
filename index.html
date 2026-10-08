@@ -53,14 +53,28 @@
     .brand { display: flex; gap: 10px; align-items: center; }
     .brand-mark { width: 12px; height: 12px; background: var(--orange); transform: rotate(45deg); }
     .mast-meta { color: var(--muted); font-weight: 700; }
+    .intro-control-row { display: flex; justify-content: flex-end; }
+    .intro-toggle {
+      min-height: 32px;
+      padding: 4px 0 3px 10px;
+      border: 0;
+      background: transparent;
+      color: var(--green);
+      cursor: pointer;
+      font-size: 10px;
+      font-weight: 700;
+    }
+    .intro-toggle:hover { text-decoration: underline; }
+    .intro-toggle:focus-visible { outline: 2px solid #317397; outline-offset: 1px; }
     .intro {
       display: grid;
       grid-template-columns: minmax(0, 1.4fr) minmax(245px, .6fr);
       align-items: end;
       gap: 44px;
-      padding: 42px 0 31px;
+      padding: 34px 0 25px;
       border-bottom: 1px solid var(--line);
     }
+    .intro[hidden] { display: none; }
     .eyebrow, .section-kicker {
       margin: 0 0 9px;
       color: var(--orange);
@@ -73,7 +87,7 @@
     h1 {
       max-width: 760px;
       margin-bottom: 13px;
-      font: 500 clamp(38px, 5vw, 62px)/.99 var(--display);
+      font: 500 clamp(34px, 4.2vw, 50px)/1.04 var(--display);
       letter-spacing: 0;
     }
     .intro-copy { max-width: 650px; margin: 0; color: #4d5b52; font-size: 16px; }
@@ -128,7 +142,7 @@
     .side-note { margin: 17px 0 0; color: var(--muted); font-size: 11px; line-height: 1.5; }
     .article { min-width: 0; }
     .article-head { display: flex; justify-content: space-between; gap: 18px; align-items: start; padding-bottom: 19px; border-bottom: 1px solid var(--line); }
-    .article-head h2 { margin: 0; font: 500 37px/1.05 var(--display); }
+    .article-head h2 { margin: 0; font: 500 32px/1.1 var(--display); }
     .article-head .section-kicker { margin-bottom: 8px; }
     .complete-button {
       flex: 0 0 auto;
@@ -142,7 +156,7 @@
     }
     .complete-button.done { background: var(--green); color: white; }
     .article-body { max-width: 790px; padding-top: 22px; }
-    .article-body h3 { margin: 27px 0 7px; font: 600 22px/1.2 var(--display); }
+    .article-body h3 { margin: 24px 0 7px; font: 600 20px/1.25 var(--display); }
     .article-body h3:first-child { margin-top: 0; }
     .article-body p { margin-bottom: 13px; color: #39473e; }
     .article-body ul, .article-body ol { padding-left: 21px; color: #39473e; }
@@ -171,7 +185,7 @@
     .diagram-arrow { color: var(--orange); text-align: center; font-size: 22px; }
     .source-note { margin: 28px 0 0; padding-top: 13px; border-top: 1px solid var(--line); color: var(--muted); font-size: 11px; }
     .quiz-head { display: flex; justify-content: space-between; gap: 28px; align-items: end; margin-bottom: 22px; }
-    .quiz-head h2 { max-width: 610px; margin: 0; font: 500 36px/1.05 var(--display); }
+    .quiz-head h2 { max-width: 610px; margin: 0; font: 500 30px/1.12 var(--display); }
     .quiz-controls { display: flex; gap: 10px; align-items: center; }
     .quiz-controls label { color: var(--muted); font-size: 11px; font-weight: 800; }
     select { min-height: 38px; padding: 0 30px 0 10px; border: 1px solid var(--line); border-radius: 0; background: var(--surface); color: var(--ink); font-size: 12px; }
@@ -179,7 +193,7 @@
     .question-panel { min-height: 400px; padding: 27px; border: 1px solid var(--line); background: var(--surface); box-shadow: var(--shadow); }
     .question-meta { display: flex; justify-content: space-between; gap: 15px; align-items: center; margin-bottom: 22px; color: var(--muted); font-size: 11px; font-weight: 800; }
     .topic-chip { padding: 4px 8px; background: var(--blue-soft); color: var(--blue); font-size: 10px; text-transform: uppercase; }
-    .question-panel h3 { max-width: 740px; margin: 0 0 23px; font: 500 25px/1.27 var(--display); }
+    .question-panel h3 { max-width: 740px; margin: 0 0 20px; font: 500 22px/1.3 var(--display); }
     .answers { display: grid; gap: 9px; }
     .answer {
       display: grid;
@@ -276,7 +290,7 @@
       body { font-size: 13px; line-height: 1.5; }
       .intro { gap: 14px; padding: 18px 0 16px; }
       .eyebrow, .section-kicker { margin-bottom: 6px; font-size: 9px; }
-      h1 { margin-bottom: 8px; font-size: clamp(29px, 8vw, 32px); line-height: 1.05; }
+      h1 { margin-bottom: 7px; font-size: clamp(27px, 7.2vw, 29px); line-height: 1.08; }
       .intro-copy { font-size: 12px; line-height: 1.45; }
       .progress-block { padding-left: 11px; }
       .progress-top { gap: 8px; }
@@ -291,14 +305,14 @@
       .topic-link:nth-child(odd) { border-right: 1px solid var(--line); }
       .topic-link { min-height: 42px; grid-template-columns: 21px minmax(0, 1fr) 14px; gap: 6px; padding: 7px 6px; font-size: 10px; }
       .article-head { display: flex; flex-direction: column; gap: 9px; padding-bottom: 14px; }
-      .article-head h2 { font-size: 26px; line-height: 1.1; }
+      .article-head h2 { font-size: 19px; line-height: 1.25; }
       .complete-button { min-height: 44px; }
       .quiz-head { display: block; }
-      .quiz-head h2 { margin-bottom: 13px; font-size: 25px; line-height: 1.12; }
+      .quiz-head h2 { margin-bottom: 9px; font-size: 18px; line-height: 1.3; }
       .quiz-controls { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 10px; align-items: center; }
       .quiz-controls select { width: 100%; min-height: 44px; }
       .question-panel { min-height: 0; padding: 14px; }
-      .question-panel h3 { margin-bottom: 15px; font-size: 18px; line-height: 1.3; }
+      .question-panel h3 { margin-bottom: 13px; font-size: 17px; line-height: 1.35; }
       .question-meta { align-items: start; gap: 8px; margin-bottom: 14px; font-size: 9px; }
       .topic-chip { max-width: 55%; line-height: 1.35; }
       .answer { grid-template-columns: 27px minmax(0, 1fr); min-height: 46px; padding: 10px 9px; font-size: 11px; line-height: 1.4; }
@@ -313,7 +327,7 @@
       .empty-state { padding: 18px 15px; }
       .empty-state h3 { font-size: 21px; line-height: 1.2; }
       .article-body { padding-top: 16px; }
-      .article-body h3 { margin: 22px 0 6px; font-size: 19px; }
+      .article-body h3 { margin: 18px 0 6px; font-size: 17px; }
       .article-body p, .article-body ul, .article-body ol { font-size: 12px; line-height: 1.5; }
       .primary-button, .quiet-button { min-height: 44px; }
       .diagram { grid-template-columns: 1fr 25px 1fr; gap: 5px; padding: 10px; }
@@ -346,7 +360,10 @@
     <div class="brand"><span class="brand-mark" aria-hidden="true"></span><span>SYSAD / Study Desk</span></div>
     <div class="mast-meta">Systems Administration &amp; Maintenance <span aria-hidden="true">·</span> Chapters 1–5</div>
   </header>
-  <section class="shell intro" aria-labelledby="page-title">
+  <div class="shell intro-control-row">
+    <button class="intro-toggle" id="intro-toggle" type="button" aria-controls="page-intro">Hide intro</button>
+  </div>
+  <section class="shell intro" id="page-intro" aria-labelledby="page-title">
     <div>
       <p class="eyebrow">Field guide + active recall</p>
       <h1 id="page-title">Build systems that keep working.</h1>
@@ -813,6 +830,7 @@
     state.completed ||= [];
     state.missed ||= [];
     state.answers ||= {};
+    state.introHidden = state.introHidden === true;
     let activeTopic = topics[0].id;
     let quizSet = [];
     let quizIndex = 0;
@@ -821,6 +839,17 @@
     function saveState() {
       try { localStorage.setItem(storageKey, JSON.stringify(state)); } catch { /* Storage can be unavailable in private browsing. */ }
     }
+    function setIntroHidden(hidden) {
+      state.introHidden = hidden;
+      document.getElementById('page-intro').hidden = hidden;
+      const button = document.getElementById('intro-toggle');
+      button.textContent = hidden ? 'Show intro' : 'Hide intro';
+      button.setAttribute('aria-expanded', String(!hidden));
+      saveState();
+    }
+    document.getElementById('intro-toggle').addEventListener('click', () => {
+      setIntroHidden(!state.introHidden);
+    });
     function setView(viewName) {
       document.querySelectorAll('.tab').forEach((tab) => tab.setAttribute('aria-selected', String(tab.id === `${viewName}-tab`)));
       document.querySelectorAll('.view').forEach((view) => view.classList.toggle('active', view.id === `${viewName}-view`));
@@ -878,6 +907,7 @@
       else state.completed.push(activeTopic);
       saveState();
       updateProgress();
+      setIntroHidden(state.introHidden);
       showTopic(activeTopic);
     });
 
@@ -1018,6 +1048,7 @@
       if (missed.length) startQuiz('all', missed);
     });
     updateProgress();
+    setIntroHidden(state.introHidden);
     showTopic(activeTopic);
     renderReview();
   </script>
