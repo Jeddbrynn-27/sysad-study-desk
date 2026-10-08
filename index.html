@@ -6,7 +6,1024 @@
   <meta name="theme-color" content="#f4f2eb">
   <title>Systems Administration | Study Desk</title>
   <style>
+    :root {<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f2eb">
+  <title>Systems Administration | Study Desk</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
     :root {
+      color-scheme: light;
+      --paper: #f4f2eb;
+      --surface: #fffefa;
+      --ink: #19251f;
+      --muted: #626c65;
+      --line: #d7d8ce;
+      --green: #254c3b;
+      --green-soft: #e6eee6;
+      --orange: #c75431;
+      --orange-soft: #f8e8df;
+      --blue: #245b79;
+      --blue-soft: #e5eff4;
+      --yellow: #e6c45f;
+      --shadow: 0 16px 40px rgba(25, 37, 31, .07);
+      --display: 'Poppins', sans-serif;
+      --body: 'Poppins', sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background-color: var(--paper);
+      background-image: radial-gradient(#c9cec1 0.65px, transparent 0.65px);
+      background-size: 19px 19px;
+      font: 15px/1.6 var(--body);
+    }
+    button, select { font: inherit; }
+    button { color: inherit; }
+    .shell { width: min(1180px, calc(100% - 48px)); margin: 0 auto; }
+    .masthead {
+      min-height: 54px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--line);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .brand { display: flex; gap: 10px; align-items: center; }
+    .brand-mark { width: 12px; height: 12px; background: var(--orange); transform: rotate(45deg); }
+    .mast-meta { color: var(--muted); font-weight: 700; }
+    .intro {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(245px, .6fr);
+      align-items: end;
+      gap: 44px;
+      padding: 42px 0 31px;
+      border-bottom: 1px solid var(--line);
+    }
+    .eyebrow, .section-kicker {
+      margin: 0 0 9px;
+      color: var(--orange);
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 {
+      max-width: 760px;
+      margin-bottom: 13px;
+      font: 500 clamp(38px, 5vw, 62px)/.99 var(--display);
+      letter-spacing: 0;
+    }
+    .intro-copy { max-width: 650px; margin: 0; color: #4d5b52; font-size: 16px; }
+    .progress-block { border-left: 2px solid var(--green); padding: 4px 0 4px 20px; }
+    .progress-top { display: flex; justify-content: space-between; gap: 15px; align-items: baseline; }
+    .progress-top strong { font: 500 25px/1.1 var(--display); }
+    .progress-top span, .progress-label { color: var(--muted); font-size: 12px; }
+    .progress-track { height: 5px; margin: 13px 0 8px; background: #dfe0d7; overflow: hidden; }
+    .progress-fill { width: 0; height: 100%; background: var(--green); transition: width .35s ease; }
+    .progress-label { margin: 0; }
+    .tabs-wrap { border-bottom: 1px solid var(--line); }
+    .tabs { display: flex; gap: 28px; }
+    .tab {
+      position: relative;
+      min-height: 56px;
+      padding: 0 1px;
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 800;
+    }
+    .tab[aria-selected="true"] { color: var(--ink); }
+    .tab[aria-selected="true"]::after { position: absolute; right: 0; bottom: -1px; left: 0; height: 3px; background: var(--orange); content: ''; }
+    .tab:focus-visible, button:focus-visible, select:focus-visible { outline: 3px solid #317397; outline-offset: 3px; }
+    .view { display: none; padding: 28px 0 70px; animation: arrive .28s ease-out; }
+    .view.active { display: block; }
+    @keyframes arrive { from { opacity: .3; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+    .study-layout { display: grid; grid-template-columns: 245px minmax(0, 1fr); gap: 48px; align-items: start; }
+    .side-nav { position: sticky; top: 16px; }
+    .side-nav h2 { margin: 0 0 13px; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; }
+    .topic-link {
+      display: grid;
+      width: 100%;
+      grid-template-columns: 26px 1fr 16px;
+      gap: 9px;
+      align-items: center;
+      padding: 10px 7px;
+      border: 0;
+      border-top: 1px solid var(--line);
+      background: transparent;
+      text-align: left;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .topic-link:last-child { border-bottom: 1px solid var(--line); }
+    .topic-link[aria-current="page"] { color: var(--green); background: rgba(230, 238, 230, .65); }
+    .topic-number { color: var(--orange); font: 700 11px var(--body); }
+    .topic-check { color: var(--green); font-size: 14px; }
+    .side-note { margin: 17px 0 0; color: var(--muted); font-size: 11px; line-height: 1.5; }
+    .article { min-width: 0; }
+    .article-head { display: flex; justify-content: space-between; gap: 18px; align-items: start; padding-bottom: 19px; border-bottom: 1px solid var(--line); }
+    .article-head h2 { margin: 0; font: 500 37px/1.05 var(--display); }
+    .article-head .section-kicker { margin-bottom: 8px; }
+    .complete-button {
+      flex: 0 0 auto;
+      padding: 9px 12px;
+      border: 1px solid var(--green);
+      background: transparent;
+      color: var(--green);
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .complete-button.done { background: var(--green); color: white; }
+    .article-body { max-width: 790px; padding-top: 22px; }
+    .article-body h3 { margin: 27px 0 7px; font: 600 22px/1.2 var(--display); }
+    .article-body h3:first-child { margin-top: 0; }
+    .article-body p { margin-bottom: 13px; color: #39473e; }
+    .article-body ul, .article-body ol { padding-left: 21px; color: #39473e; }
+    .article-body li { margin: 5px 0; padding-left: 3px; }
+    .article-body strong { color: var(--ink); }
+    .callout {
+      margin: 20px 0;
+      padding: 14px 17px;
+      border-left: 3px solid var(--orange);
+      background: var(--orange-soft);
+      color: #4c332b;
+    }
+    .callout strong { display: block; margin-bottom: 3px; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; }
+    .diagram {
+      display: grid;
+      grid-template-columns: 1fr 42px 1fr;
+      gap: 10px;
+      align-items: center;
+      margin: 21px 0;
+      padding: 16px;
+      border: 1px solid var(--line);
+      background: var(--surface);
+    }
+    .diagram-node { padding: 11px 9px; border: 1px solid #b7c8bb; background: var(--green-soft); text-align: center; font-size: 11px; font-weight: 800; }
+    .diagram-node small { display: block; color: var(--muted); font-size: 10px; font-weight: 500; }
+    .diagram-arrow { color: var(--orange); text-align: center; font-size: 22px; }
+    .source-note { margin: 28px 0 0; padding-top: 13px; border-top: 1px solid var(--line); color: var(--muted); font-size: 11px; }
+    .quiz-head { display: flex; justify-content: space-between; gap: 28px; align-items: end; margin-bottom: 22px; }
+    .quiz-head h2 { max-width: 610px; margin: 0; font: 500 36px/1.05 var(--display); }
+    .quiz-controls { display: flex; gap: 10px; align-items: center; }
+    .quiz-controls label { color: var(--muted); font-size: 11px; font-weight: 800; }
+    select { min-height: 38px; padding: 0 30px 0 10px; border: 1px solid var(--line); border-radius: 0; background: var(--surface); color: var(--ink); font-size: 12px; }
+    .quiz-grid { display: grid; grid-template-columns: minmax(0, 1fr) 235px; gap: 34px; align-items: start; }
+    .question-panel { min-height: 400px; padding: 27px; border: 1px solid var(--line); background: var(--surface); box-shadow: var(--shadow); }
+    .question-meta { display: flex; justify-content: space-between; gap: 15px; align-items: center; margin-bottom: 22px; color: var(--muted); font-size: 11px; font-weight: 800; }
+    .topic-chip { padding: 4px 8px; background: var(--blue-soft); color: var(--blue); font-size: 10px; text-transform: uppercase; }
+    .question-panel h3 { max-width: 740px; margin: 0 0 23px; font: 500 25px/1.27 var(--display); }
+    .answers { display: grid; gap: 9px; }
+    .answer {
+      display: grid;
+      grid-template-columns: 27px 1fr;
+      gap: 10px;
+      align-items: start;
+      width: 100%;
+      padding: 12px;
+      border: 1px solid var(--line);
+      background: #fffefa;
+      text-align: left;
+      cursor: pointer;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .answer:hover:not(:disabled) { border-color: var(--green); background: #f5f8f3; }
+    .answer:disabled { cursor: default; }
+    .answer-letter { display: grid; width: 23px; height: 23px; place-items: center; border: 1px solid #bfc4ba; border-radius: 50%; color: var(--muted); font-size: 10px; font-weight: 800; }
+    .answer.is-correct { border-color: #6e9274; background: var(--green-soft); }
+    .answer.is-correct .answer-letter { border-color: var(--green); background: var(--green); color: white; }
+    .answer.is-wrong { border-color: #d28c74; background: var(--orange-soft); }
+    .answer.is-wrong .answer-letter { border-color: var(--orange); background: var(--orange); color: white; }
+    .essay-answer {
+      width: 100%;
+      min-height: 170px;
+      margin-top: 6px;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      background: #fffefa;
+      color: var(--ink);
+      resize: vertical;
+      font: 14px/1.5 var(--body);
+    }
+    .essay-answer:focus { border-color: var(--green); outline: none; box-shadow: 0 0 0 3px rgba(37, 76, 59, .12); }
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+    .feedback { display: none; margin-top: 18px; padding: 15px 16px; border-left: 3px solid var(--green); background: #edf3ec; color: #324639; font-size: 12px; }
+    .feedback.show { display: block; animation: arrive .2s ease-out; }
+    .feedback.wrong { border-color: var(--orange); background: #fbede7; color: #53372e; }
+    .feedback strong { display: block; margin-bottom: 5px; font-size: 13px; }
+    .feedback p { margin: 5px 0 0; }
+    .question-actions { display: flex; justify-content: space-between; gap: 12px; align-items: center; margin-top: 18px; }
+    .primary-button, .quiet-button { min-height: 40px; padding: 9px 15px; border: 1px solid var(--green); cursor: pointer; font-size: 12px; font-weight: 800; }
+    .primary-button { background: var(--green); color: white; }
+    .primary-button:hover { background: #173829; }
+    .quiet-button { background: transparent; color: var(--green); }
+    .quiet-button:hover { background: var(--green-soft); }
+    .primary-button:disabled { opacity: .45; cursor: not-allowed; }
+    .score-panel { padding-top: 10px; }
+    .score-panel h3 { margin: 0 0 15px; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; }
+    .score-number { margin: 0; font: 500 43px/1 var(--display); }
+    .score-caption { margin: 7px 0 19px; color: var(--muted); font-size: 11px; }
+    .score-line { display: flex; justify-content: space-between; padding: 8px 0; border-top: 1px solid var(--line); color: var(--muted); font-size: 11px; }
+    .score-line b { color: var(--ink); }
+    .question-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 15px; }
+    .question-dot { width: 23px; height: 23px; display: grid; place-items: center; border: 1px solid var(--line); color: var(--muted); font-size: 9px; }
+    .question-dot.current { border-color: var(--orange); color: var(--orange); }
+    .question-dot.right { background: var(--green); border-color: var(--green); color: white; }
+    .question-dot.missed { background: var(--orange-soft); border-color: var(--orange); color: var(--orange); }
+    .empty-state { padding: 32px; border: 1px solid var(--line); background: var(--surface); }
+    .empty-state h3 { font: 500 28px var(--display); }
+    .empty-state p { color: var(--muted); }
+    .footer { padding: 17px 0 25px; border-top: 1px solid var(--line); color: var(--muted); font-size: 10px; }
+    .footer strong { color: var(--ink); }
+    @media (max-width: 800px) {
+      .intro { grid-template-columns: 1fr; gap: 23px; padding: 32px 0 25px; }
+      .progress-block { max-width: 430px; }
+      .study-layout { grid-template-columns: 1fr; gap: 23px; }
+      .side-nav { position: static; }
+      .topic-links { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-bottom: 1px solid var(--line); }
+      .topic-link { border-bottom: 0 !important; }
+      .topic-link:nth-child(odd) { border-right: 1px solid var(--line); }
+      .side-note { display: none; }
+      .quiz-grid { grid-template-columns: 1fr; gap: 20px; }
+      .score-panel { display: grid; grid-template-columns: repeat(2, 1fr); column-gap: 16px; }
+      .score-panel h3, .question-list { grid-column: 1 / -1; }
+      .score-caption { margin-bottom: 8px; }
+      .score-line { align-self: center; }
+    }
+    @media (max-width: 540px) {
+      .shell { width: min(100% - 28px, 1180px); }
+      .masthead { min-height: 48px; gap: 10px; font-size: 10px; }
+      .masthead .brand { gap: 7px; white-space: nowrap; }
+      .mast-meta { max-width: 48%; font-size: 8px; line-height: 1.35; text-align: right; }
+      .intro { gap: 20px; padding: 25px 0 21px; }
+      h1 { font-size: clamp(36px, 10vw, 42px); }
+      .intro-copy { font-size: 14px; }
+      .progress-block { padding-left: 13px; }
+      .progress-top { gap: 8px; }
+      .progress-top strong { font-size: 22px; }
+      .progress-top span, .progress-label { font-size: 11px; }
+      .tabs-wrap { position: sticky; top: 0; z-index: 10; background: var(--paper); }
+      .tabs { display: flex; gap: 3px; }
+      .tab { flex: 1 1 0; min-width: 0; min-height: 54px; padding: 5px 2px; font-size: 10px; line-height: 1.25; text-align: center; }
+      #quiz-count { display: block; font-size: 9px; font-weight: 600; }
+      .view { padding: 18px 0 42px; }
+      .topic-links { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .topic-link:nth-child(odd) { border-right: 1px solid var(--line); }
+      .topic-link { min-height: 46px; grid-template-columns: 21px minmax(0, 1fr) 14px; gap: 6px; padding: 8px 6px; font-size: 11px; }
+      .article-head { display: flex; flex-direction: column; gap: 12px; }
+      .article-head h2 { font-size: 32px; }
+      .complete-button { min-height: 44px; }
+      .quiz-head { display: block; }
+      .quiz-head h2 { margin-bottom: 16px; font-size: 30px; }
+      .quiz-controls { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 10px; align-items: center; }
+      .quiz-controls select { width: 100%; min-height: 44px; }
+      .question-panel { min-height: 0; padding: 16px; }
+      .question-panel h3 { margin-bottom: 18px; font-size: 21px; }
+      .question-meta { align-items: start; gap: 8px; margin-bottom: 17px; font-size: 10px; }
+      .topic-chip { max-width: 55%; line-height: 1.35; }
+      .answer { grid-template-columns: 27px minmax(0, 1fr); min-height: 48px; padding: 11px 9px; font-size: 12px; }
+      .essay-answer { min-height: 190px; font-size: 16px; }
+      .question-actions { align-items: stretch; }
+      .question-actions button { flex: 1; min-height: 44px; padding: 9px 10px; }
+      .score-panel { gap: 0 12px; padding: 14px; border: 1px solid var(--line); background: var(--surface); }
+      .score-panel h3 { margin-bottom: 10px; }
+      .score-number { font-size: 36px; }
+      .question-list { gap: 5px; }
+      .question-dot { width: 27px; height: 27px; font-size: 10px; }
+      .empty-state { padding: 22px 18px; }
+      .empty-state h3 { font-size: 24px; }
+      .primary-button, .quiet-button { min-height: 44px; }
+      .diagram { grid-template-columns: 1fr 25px 1fr; gap: 5px; padding: 10px; }
+      .diagram-node { padding: 9px 4px; font-size: 10px; }
+    }
+    @media (max-width: 360px) {
+      .masthead { align-items: start; flex-direction: column; justify-content: center; gap: 2px; padding: 7px 0; }
+      .mast-meta { max-width: 100%; text-align: left; }
+      .tab { font-size: 9px; }
+      #quiz-count { font-size: 8px; }
+      .question-actions { flex-direction: column; }
+      .question-actions button { width: 100%; }
+      .topic-link { font-size: 10px; }
+    }
+    @media print {
+      body { background: white; }
+      .masthead, .tabs-wrap, .side-nav, .complete-button, .footer, #quiz-view, #review-view { display: none !important; }
+      .shell { width: 100%; }
+      .intro { display: block; padding: 0 0 15px; }
+      .intro h1 { font-size: 32px; }
+      .progress-block { display: none; }
+      #study-view { display: block !important; padding: 12px 0; }
+      .study-layout { display: block; }
+      .article-head { border: 0; }
+    }
+  </style>
+</head>
+<body>
+  <header class="shell masthead">
+    <div class="brand"><span class="brand-mark" aria-hidden="true"></span><span>SYSAD / Study Desk</span></div>
+    <div class="mast-meta">Systems Administration &amp; Maintenance <span aria-hidden="true">·</span> Chapters 1–5</div>
+  </header>
+  <section class="shell intro" aria-labelledby="page-title">
+    <div>
+      <p class="eyebrow">Field guide + active recall</p>
+      <h1 id="page-title">Build systems that keep working.</h1>
+      <p class="intro-copy">A practical study companion for designing the team, workstations, servers, services, facilities, and recovery plans behind dependable IT.</p>
+    </div>
+    <div class="progress-block" aria-live="polite">
+      <div class="progress-top"><strong id="progress-count">0 / 6</strong><span>study units completed</span></div>
+      <div class="progress-track" role="progressbar" aria-label="Study units completed" aria-valuemin="0" aria-valuemax="6" aria-valuenow="0"><div class="progress-fill" id="progress-fill"></div></div>
+      <p class="progress-label" id="progress-label">Choose a unit and mark it complete as you study.</p>
+    </div>
+  </section>
+  <div class="tabs-wrap">
+    <nav class="shell tabs" role="tablist" aria-label="Study desk views">
+      <button class="tab" id="study-tab" role="tab" aria-selected="true" aria-controls="study-view">Study guide</button>
+      <button class="tab" id="quiz-tab" role="tab" aria-selected="false" aria-controls="quiz-view">Practice quiz <span id="quiz-count"></span></button>
+      <button class="tab" id="review-tab" role="tab" aria-selected="false" aria-controls="review-view">Review missed</button>
+    </nav>
+  </div>
+
+  <main class="shell">
+    <section class="view active" id="study-view" role="tabpanel" aria-labelledby="study-tab">
+      <div class="study-layout">
+        <aside class="side-nav" aria-label="Study topics">
+          <h2>Course map</h2>
+          <div class="topic-links" id="topic-links"></div>
+          <p class="side-note">Read a unit, connect it to the operational decision it supports, then use the quiz to test recall.</p>
+        </aside>
+        <article class="article" aria-live="polite">
+          <div class="article-head">
+            <div><p class="section-kicker" id="article-kicker"></p><h2 id="article-title"></h2></div>
+            <button class="complete-button" id="complete-button" type="button">Mark unit complete</button>
+          </div>
+          <div class="article-body" id="article-body"></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="view" id="quiz-view" role="tabpanel" aria-labelledby="quiz-tab" tabindex="0">
+      <div class="quiz-head">
+        <div><p class="section-kicker">Practice / explain every choice</p><h2>Recall the principle. Then understand the trade-off.</h2></div>
+        <div class="quiz-controls"><label for="topic-filter">Question set</label><select id="topic-filter" aria-label="Filter questions by topic"><option value="all">All topics</option></select></div>
+      </div>
+      <div class="quiz-grid" id="quiz-content"></div>
+    </section>
+
+    <section class="view" id="review-view" role="tabpanel" aria-labelledby="review-tab" tabindex="0">
+      <div class="quiz-head">
+        <div><p class="section-kicker">Review / close the gaps</p><h2>Turn missed questions into durable recall.</h2></div>
+        <button class="primary-button" id="retry-missed" type="button">Retry missed questions</button>
+      </div>
+      <div id="review-content"></div>
+    </section>
+  </main>
+  <footer class="shell footer"><strong>Source coverage:</strong> provided Systems Administration and Maintenance chapter-one PDF; workstation and server DOCX handouts; server-services, enhanced services, data-center, and disaster-recovery slide decks. Course-specific terms are retained; examples are clarified for study.</footer>
+
+  <script>
+    const topics = [
+      {
+        id: 'team', title: 'Building the SA team', short: 'Team design & support', kicker: '01 / Organization',
+        html: `
+          <h3>Design around service, not headcount</h3>
+          <p>The right system-administration (SA) team size depends on the number and variety of people and machines, environmental complexity, the work the organization does, required service levels, and how mission-critical its computing services are. There is no universal customer-to-SA ratio. Use ticket data or a time-and-motion study to see where staff time goes before deciding whether to hire, train, or bring in consultants.</p>
+          <div class="callout"><strong>Decision test</strong>If service is poor, identify whether the constraint is capacity, skill, process, or tooling. Adding people alone may not solve a missing-skill problem.</div>
+          <h3>Funding and reporting structure</h3>
+          <ul><li><strong>Centralized:</strong> the company funds a central SA organization. This supports standards and reduces duplicated services, but can feel less tailored to departments.</li><li><strong>Decentralized:</strong> business units fund and direct their own SAs. This can improve local fit and accountability, but risks duplicated work and inconsistent infrastructure.</li><li><strong>Hybrid:</strong> dedicated SAs serve departments while reporting to central IT. It balances local relationships with common standards, but needs clear priorities to avoid the worst of both models.</li></ul>
+          <p>Choose a management chain that can raise infrastructure issues, protect time for planned work, and influence major decisions. Communicate candidly during organizational changes; invite concerns and suggestions rather than imposing a new reporting model without context.</p>
+          <h3>Roles, shared services, and customer contact</h3>
+          <p>Build capability across four duty areas: day-to-day maintenance and customer support; deployment of new services; architecture and service design; and senior generalists who integrate complex systems end to end. Smaller teams will have overlap. Use training, helpdesk rotations, feedback, and direct customer contact to grow skills.</p>
+          <ul><li><strong>Infrastructure team:</strong> owns shared authentication, directory, network, email, printing, remote access, security, and automated provisioning/patching. Keep interfaces consistent across sites.</li><li><strong>Customer support:</strong> often works best as a distributed or hybrid model, with known contacts and response expectations aligned to customer needs.</li><li><strong>Helpdesk:</strong> centralize first contact and basic triage; publish escalation and hand-off procedures, especially across regions.</li><li><strong>Outsourcing:</strong> consider bounded, non-core services when external expertise or coverage is more cost-effective. Keep accountability, security, service levels, and escalation ownership explicit.</li></ul>
+          <div class="callout"><strong>Keep the relationship healthy</strong>Central infrastructure needs consistency; customers need responsive, understandable support. Strong communication connects the two and prevents an “us versus them” culture.</div>
+          <h3>Quick application</h3><p>For a 500-person organization, begin with ticket volumes, endpoint/server counts, operating hours, and service criticality. Propose a central IT budget with service-level reporting, then size support and infrastructure roles from measured demand instead of treating a ratio as a rule.</p>`
+      },
+      {
+        id: 'workstations', title: 'Workstations & lifecycle', short: 'Workstations & lifecycle', kicker: '02 / Endpoints',
+        html: `
+          <h3>Manage the whole asset lifecycle</h3>
+          <p>A workstation is a computer primarily dedicated to one customer’s work: desktop, laptop, remote PC, or virtual machine. Large fleets live for years, so a small change or inconsistency can multiply into substantial support effort. Standard configurations and repeatable processes reduce that operational drag.</p>
+          <p>A useful lifecycle model distinguishes <strong>new</strong> (not yet installed), <strong>clean</strong> (OS installed but not fully configured), <strong>configured</strong> (usable and standards-compliant), <strong>unknown</strong> (misconfigured or no longer trusted), and <strong>retired/off</strong> (removed from service). The goal is to keep assets in a known, supportable state and make rebuilds predictable.</p>
+          <h3>Automate the initial build</h3>
+          <p>Automated installation creates a known baseline and reduces manual mistakes and configuration drift. Building from a standard image or installation process is often more dependable than layering local changes onto a vendor’s preloaded operating system. Cloning can speed deployment, but different hardware, image maintenance, spare-image costs, and vendor support limits are trade-offs. A hybrid approach can use a minimal image followed by automated configuration and application deployment.</p>
+          <div class="callout"><strong>When automation is not available</strong>Use a written checklist, consistent configuration templates, and an auditable hand-off. Repeatability is the goal, whether the steps are automated or manual.</div>
+          <h3>Updates are not initial installs</h3>
+          <p>Updates run on machines already in use. They must avoid disrupting live users and office networks; tolerate laptops that are offline; account for an imperfect or unknown current state; and recover safely when installation fails. Some updates need a maintenance window or a user-approved deferral. Test packages before broad deployment and keep a rollback or recovery route.</p>
+          <p>The <strong>one, some, many</strong> technique limits blast radius: deploy to one representative machine, then a small diverse group, then the wider fleet after checking results. Do not confuse fast rollout with safe rollout.</p>
+          <h3>Network configuration and retirement</h3>
+          <p>Use templates and centralized services such as DHCP instead of per-host hand configuration wherever practical. Dynamic leases suit transient clients; stable services and devices may need reservations or managed static addressing. Plan how clients receive the right configuration, including on unfamiliar or public networks.</p>
+          <p>Rebuilds should be documented, authorized, and preceded by data preservation or secure wiping as appropriate. Retire assets using the organization’s lifecycle, depreciation, and disposal requirements; remove access and inventory records, and protect or destroy stored data before reuse or disposal.</p>`
+      },
+      {
+        id: 'servers', title: 'Server hardware & operations', short: 'Server hardware & operations', kicker: '03 / Shared compute',
+        html: `
+          <h3>Buy for the workload and the repair path</h3>
+          <p>Many customers depend on each server, so reliability, performance, and repair time matter more than they do for an individual workstation. Choose hardware designed for server workloads: expansion capacity, suitable CPU and memory, high-performance I/O, upgrade options, rack mounting, front/rear serviceability, management access, and high-availability options. Some applications are I/O-bound, so CPU speed alone is not a reliable performance measure.</p>
+          <p>Compare total cost of ownership, not just sticker price. A serviceable chassis, vendor maintenance, spare parts, and longer useful life can justify a higher initial cost. Standardizing on fewer models simplifies training and spares; a diverse vendor mix can reduce lock-in. Select deliberately for the operating environment.</p>
+          <h3>Match repair coverage to criticality</h3>
+          <ul><li>For a noncritical member of a large pool, next-day service or local spare parts may be enough.</li><li>For many similar machines, a shared spares kit can make local repair faster and cheaper.</li><li>Introduce new models in a controlled way so the number of required spare kits stays manageable.</li><li>For critical hosts, stock commonly failing parts or buy faster response coverage. For highly critical systems, evaluate true redundancy alongside on-site support or a ready replacement.</li></ul>
+          <h3>Protect data and configuration</h3>
+          <p>Servers often hold unique data and configuration. Back up critical data, verify that backups can be restored, and protect configuration and recovery information. Redundancy improves availability but is not a backup: it may reproduce accidental deletion or corruption. Treat local workstation data as a risk too, even where user profiles or files are centrally stored.</p>
+          <h3>Operate for access and uptime</h3>
+          <p>Place servers in a suitably protected data center, configure the OS for its workload, and provide controlled remote or out-of-band management so routine repairs do not require a physical visit. A mirrored boot disk can shorten recovery from a boot-drive failure; it does not replace data backups. Separate administrative traffic when useful, and use redundant power, networking, and hot-swap parts according to service needs.</p>
+          <div class="diagram" role="img" aria-label="A service depends on server capacity, protected data, and recoverable operations"><div class="diagram-node">Compute<small>capacity + repair</small></div><div class="diagram-arrow" aria-hidden="true">+</div><div class="diagram-node">Continuity<small>backup + redundancy</small></div></div>
+          <div class="callout"><strong>Reliability vocabulary</strong>Availability asks whether the service is usable. Reliability concerns continued correct operation. A redundant component can improve availability; a tested restore process protects recoverability and data.</div>`
+      },
+      {
+        id: 'services', title: 'Designing IT services', short: 'Service design principles', kicker: '04 / Service engineering',
+        html: `
+          <h3>A service is more than installed software</h3>
+          <p>A service is the function delivered to customers. It may depend on several servers working together. It becomes a real operational service only when it is reliable, scalable, monitored, maintained, supportable, and integrated with the environment around it.</p>
+          <div class="diagram" role="img" aria-label="Users reach a service by its stable functional name, which routes to replaceable server infrastructure"><div class="diagram-node">Users<small>one familiar entry point</small></div><div class="diagram-arrow" aria-hidden="true">→</div><div class="diagram-node">Service name<small>independent of one host</small></div></div>
+          <h3>Eight design principles</h3>
+          <ol><li><strong>Operational requirements:</strong> define interoperability with shared services, growth without disruption, network impact, and ongoing operating cost before building.</li><li><strong>Open architecture:</strong> prefer documented protocols and file formats that work across clients and vendors. This can reduce licensing constraints and lock-in.</li><li><strong>Simplicity:</strong> choose the simplest design that satisfies real requirements. Fewer moving parts are easier to integrate, expand, and keep reliable.</li><li><strong>Vendor relations:</strong> consult technical vendor staff about configuration and understand the product roadmap before committing.</li><li><strong>Machine independence:</strong> expose a generic, function-based name rather than a specific server hostname. Plan migration so hardware can change without retraining every client.</li><li><strong>Environment:</strong> include power, cooling, physical protection, and high availability in the service design.</li><li><strong>Restricted access:</strong> limit direct production login to the administrators responsible for that service and use controlled remote access.</li><li><strong>Reliability:</strong> make good use of redundancy, while recognizing that simplicity is one of the strongest reliability tools.</li></ol>
+          <div class="callout"><strong>Design prompt</strong>Before launch, ask: can the service grow, can its host change, can another administrator operate it, and can customers tell when it is unhealthy?</div>
+          <h3>Make the service operable</h3>
+          <p>Document dependencies, ownership, alerts, maintenance procedures, access boundaries, recovery steps, and customer-facing expectations. Measure service health from the customer’s point of view, not only whether one process is running.</p>`
+      },
+      {
+        id: 'datacenter', title: 'Data-center facilities', short: 'Data-center facilities', kicker: '05 / Physical infrastructure',
+        html: `
+          <h3>A server room is an engineered environment</h3>
+          <p>A data center is a shared physical resource for computing equipment. Its design includes location, controlled access, security, power, cooling, humidity, fire protection, racks, cabling, communications, console access, workspace, tools, and spare parts. Facility choices directly affect service availability and repair time.</p>
+          <h3>Location, access, and security</h3>
+          <p>Consider regional hazards, flood risk, physical access for equipment, and the number and geographic separation of sites. Two sites in the same hazard zone may fail together. Restrict entry and use identity-aware controls that support accountability, such as individual credentials and access logs; shared numeric codes make it harder to know who entered.</p>
+          <h3>Power, cooling, and fire protection</h3>
+          <ul><li>Plan capacity and redundancy for utility feeds, UPS runtime, generators, automatic transfer, and rack-level distribution. Define how long systems must ride through an outage before backup generation is available.</li><li>Monitor power use and temperature. Cooling must remove the heat equipment produces; direct cool air to server intakes and collect exhaust. Hot/cold aisle layouts reduce mixing. The deck recommends maintaining room humidity around 45–55% to limit static and condensation risks; follow current facility and equipment specifications.</li><li>Select fire suppression with qualified safety and facilities professionals. The right system must protect people first while meeting code and avoiding unnecessary equipment damage.</li></ul>
+          <h3>Racks, cabling, and hands-on work</h3>
+          <p>Racks shape airflow, power, and network layout. Allow room for growth, service access, cable routes, and equipment dimensions. Keep power and data cabling organized and identifiable; label cables and use appropriate cable-management paths rather than blocking airflow. Provide console/KVM or out-of-band access, a phone or reliable communication path, and a workbench with tools and commonly needed parts.</p>
+          <div class="callout"><strong>Facility check</strong>For each critical rack, know its power sources, cooling path, network path, access owners, environmental alerts, and the physical recovery steps if normal remote management fails.</div>
+          <h3>Plan more than construction</h3><p>Model power, cooling, space, and maintenance costs before a facility decision. For smaller organizations, a professionally operated colocation or cloud facility may meet requirements more safely than an improvised server closet.</p>`
+      },
+      {
+        id: 'recovery', title: 'Disaster recovery & data integrity', short: 'Recovery & data integrity', kicker: '06 / Resilience',
+        html: `
+          <h3>Assess risk before buying protection</h3>
+          <p>A disaster is an event with significant impact on the organization’s ability to do business. It may be a natural event, a site outage, or an infrastructure accident such as a severed network cable. Risk analysis identifies plausible threats, estimates likelihood and business impact, and helps prioritize cost-effective mitigation.</p>
+          <p>Include contractual and legal duties, safety/building requirements, customer commitments, and any sector-specific obligations. Recovery targets should reflect what the organization is required and able to restore, not simply the most optimistic technical possibility.</p>
+          <h3>Limit damage and prepare to recover</h3>
+          <p>Some risk reduction comes from planning and disciplined processes; other controls require investment. Prioritize systems by business criticality and dependencies, then document who declares an incident, who makes decisions, how stakeholders are informed, where essential teams can work, and how systems will be restored.</p>
+          <ul><li>Keep backups protected from the failures that could affect production, and regularly test restore procedures.</li><li>Document dependencies, recovery order, contacts, credentials, and alternate operating arrangements securely.</li><li>Use geographic site redundancy when required, with sites far enough apart to avoid a shared hazard. Exercise failover and failback; a second site that has never been tested is an assumption, not a recovery capability.</li><li>Plan security incident response as well as physical recovery. Controls can prevent attacks, detect them, and contain damage quickly.</li></ul>
+          <h3>Integrity, availability, and backup are different</h3>
+          <p><strong>Data integrity</strong> means data remains accurate and is not changed improperly. Corruption may be malicious, accidental, caused by software defects, or introduced by failing hardware. <strong>Availability</strong> means authorized users can access systems when needed. Backups help recover earlier data; redundancy helps keep a service running; access control and validation help prevent unauthorized or incorrect changes. No single control provides all three.</p>
+          <div class="callout"><strong>Communications are part of recovery</strong>Decide in advance who speaks for the organization, what can be shared, and who acts if the primary spokesperson is unavailable. Train designated communicators and coordinate with public-relations or legal advisors when appropriate.</div>
+          <h3>Prove the plan works</h3><p>Run tabletop exercises and technical restore/failover tests. Record gaps, owners, and deadlines. Update the plan when services, staff, vendors, facilities, or legal obligations change.</p>`
+      }
+    ];
+
+    const questions = [
+      { topic: 'team', prompt: 'An SA team is missing the skills needed to support a new platform, but ticket volume is manageable. What is the strongest first response?', choices: [
+        { text: 'Train the team or bring in a specialist consultant, then reassess demand.', isCorrect: true, explanation: 'This addresses the identified skills gap before increasing permanent staffing.' },
+        { text: 'Hire several generalists immediately because every service issue is a headcount issue.', explanation: 'The stated constraint is missing expertise, not demonstrated capacity; more staff may not close the skills gap.' },
+        { text: 'Move all SAs into the business units and let each choose its own standards.', explanation: 'That changes the funding/reporting model without resolving the specific technical capability gap.' },
+        { text: 'Outsource all IT operations permanently.', explanation: 'This is a disproportionate structural change when a targeted training or consulting response may suffice.' }
+      ]},
+      { topic: 'team', prompt: 'Which funding model most directly supports consistent standards and less duplicated infrastructure work?', choices: [
+        { text: 'Centralized funding through a company-wide SA organization.', isCorrect: true, explanation: 'A central organization can set common standards and coordinate shared services.' },
+        { text: 'Decentralized funding, with each department independently buying services.', explanation: 'This improves local control but can duplicate services and fragment standards.' },
+        { text: 'No budget owner; charge costs only after a failure.', explanation: 'Reactive billing makes costs unpredictable and does not establish ownership or planned service levels.' },
+        { text: 'Each employee individually selects and funds their own support.', explanation: 'Individual purchasing does not create coordinated enterprise infrastructure or consistent accountability.' }
+      ]},
+      { topic: 'team', prompt: 'What is the best role for a centralized first-tier helpdesk?', choices: [
+        { text: 'Receive initial reports, resolve basic issues, and route the rest using clear escalation rules.', isCorrect: true, explanation: 'Central triage is efficient when the helpdesk can reliably hand off issues to the right specialist.' },
+        { text: 'Own every advanced infrastructure incident until it is fully solved.', explanation: 'Specialist teams should handle issues beyond first-tier scope; the helpdesk coordinates and escalates.' },
+        { text: 'Allow each regional desk to use unrelated ticket categories and priorities.', explanation: 'Inconsistent procedures make cross-region escalation and reporting difficult.' },
+        { text: 'Avoid recording tickets so staff can focus on fixing problems.', explanation: 'Tickets support prioritization, hand-offs, demand analysis, and service improvement.' }
+      ]},
+      { topic: 'team', prompt: 'A hybrid support model is intended to balance which two needs?', choices: [
+        { text: 'Department-level relationships with centrally coordinated standards and reporting.', isCorrect: true, explanation: 'Dedicated local contacts can improve responsiveness while central reporting preserves shared governance.' },
+        { text: 'Unlimited departmental autonomy with no shared infrastructure ownership.', explanation: 'That describes a largely decentralized model and loses the central coordination benefit.' },
+        { text: 'A fully outsourced service with no internal technical owner.', explanation: 'Hybrid support still has internal ownership and coordination.' },
+        { text: 'Project delivery without any customer-facing support roles.', explanation: 'Customer support remains a key part of the hybrid structure.' }
+      ]},
+      { topic: 'workstations', prompt: 'Why should a workstation update rollout use the one, some, many technique?', choices: [
+        { text: 'To find problems on a small initial sample before a failure affects the whole fleet.', isCorrect: true, explanation: 'Staged rollout limits blast radius and provides evidence before broad deployment.' },
+        { text: 'To permanently patch only a few machines and ignore the rest.', explanation: 'The technique stages deployment; it is not a reason to leave the fleet unpatched.' },
+        { text: 'To avoid testing because each stage is small.', explanation: 'Testing and monitoring each stage are precisely what make the rollout safer.' },
+        { text: 'To install updates only when users bring machines to the helpdesk.', explanation: 'That creates unnecessary manual visits and does not establish a staged managed rollout.' }
+      ]},
+      { topic: 'workstations', prompt: 'What makes workstation software updates operationally different from an initial OS installation?', choices: [
+        { text: 'Updates affect machines already in use, possibly with live users and an unknown current state.', isCorrect: true, explanation: 'Updates must preserve usability and account for varied, active endpoint states.' },
+        { text: 'Updates always run in a lab on blank disks.', explanation: 'That better describes a controlled initial build, not a deployed endpoint update.' },
+        { text: 'Updates need no network planning because they are small.', explanation: 'Updates still use the production network and must avoid disrupting users or other hosts.' },
+        { text: 'Updates require an administrator to visit every desk.', explanation: 'A key goal of update automation is to avoid disruptive physical visits.' }
+      ]},
+      { topic: 'workstations', prompt: 'A laptop may be offline when a central patch job runs. What should the update design account for?', choices: [
+        { text: 'Retry when it returns or let the endpoint initiate scheduled checks.', isCorrect: true, explanation: 'Portable devices are not always reachable, so the system needs a catch-up strategy.' },
+        { text: 'Mark it compliant after one failed connection attempt.', explanation: 'A failed contact does not prove that updates are installed.' },
+        { text: 'Require the customer to reinstall the OS whenever it reconnects.', explanation: 'That is excessive and confuses routine patching with a rebuild.' },
+        { text: 'Disable updates for all portable devices.', explanation: 'This leaves a significant device group without security and maintenance updates.' }
+      ]},
+      { topic: 'workstations', prompt: 'Which practice most directly reduces configuration drift in a large workstation fleet?', choices: [
+        { text: 'Use a standard build with automated installation and configuration.', isCorrect: true, explanation: 'Repeatable builds help keep systems consistent and easier to support.' },
+        { text: 'Let each technician make undocumented choices during setup.', explanation: 'Unrecorded differences increase variation and make recovery harder.' },
+        { text: 'Rely on the vendor’s preloaded image without checking its changes.', explanation: 'Vendor defaults may differ between shipments and from the organization’s desired baseline.' },
+        { text: 'Use a separate manual process for every endpoint.', explanation: 'Per-machine manual procedures increase labor and human error.' }
+      ]},
+      { topic: 'servers', prompt: 'Why is server-grade hardware often worth its higher purchase price?', choices: [
+        { text: 'It is designed for serviceability, expansion, I/O demand, management, and availability.', isCorrect: true, explanation: 'These capabilities can improve uptime and reduce long-term support and repair costs.' },
+        { text: 'It guarantees software will never fail.', explanation: 'Hardware features reduce some risks but cannot guarantee software correctness or uninterrupted service.' },
+        { text: 'It eliminates the need for backups.', explanation: 'Availability features do not replace protection and restore of data.' },
+        { text: 'It always has a faster CPU than any workstation.', explanation: 'Workload performance depends on CPU, memory, I/O, and other design factors; CPU speed alone is not decisive.' }
+      ]},
+      { topic: 'servers', prompt: 'A critical server’s boot drive fails. Which control can help it continue booting, and what does that control not replace?', choices: [
+        { text: 'Mirrored boot disks can fail over, but they do not replace data backups.', isCorrect: true, explanation: 'A mirror can provide a working boot copy; backups protect recoverable versions of data.' },
+        { text: 'A spare monitor can restore the operating system and user data.', explanation: 'A monitor provides display, not disk redundancy or data recovery.' },
+        { text: 'A longer vendor contract prevents the drive from failing.', explanation: 'A contract can speed repair, but it does not prevent the failure or provide a backup.' },
+        { text: 'A DHCP reservation recreates the boot disk.', explanation: 'DHCP manages network configuration, not storage recovery.' }
+      ]},
+      { topic: 'servers', prompt: 'Why is redundancy not the same as a backup?', choices: [
+        { text: 'Redundancy may keep service running but can also replicate accidental deletion or corruption.', isCorrect: true, explanation: 'A separate recoverable copy is needed to restore data to an earlier valid state.' },
+        { text: 'Redundancy stores data only on paper.', explanation: 'Redundant systems can store digital copies; the issue is that they may mirror bad changes.' },
+        { text: 'Backups are only useful for workstation files.', explanation: 'Server data and configuration often need strong backup and recovery protection.' },
+        { text: 'Backups automatically prevent hardware failures.', explanation: 'Backups support recovery after loss; they do not prevent a component from failing.' }
+      ]},
+      { topic: 'servers', prompt: 'A company runs many identical noncritical servers. Which repair strategy may reduce both cost and downtime?', choices: [
+        { text: 'Keep a shared spare-parts kit and train local staff to replace common failures.', isCorrect: true, explanation: 'Common parts can be repaired quickly without buying a full kit or fastest response contract for every host.' },
+        { text: 'Buy a dedicated duplicate machine for every server.', explanation: 'That may be excessive for a large pool of noncritical machines.' },
+        { text: 'Use only consumer desktops as servers to lower purchase price.', explanation: 'This can sacrifice serviceability, expansion, and availability features.' },
+        { text: 'Do not keep spares or support contracts because the servers are similar.', explanation: 'Similarity can make a shared spares strategy especially practical.' }
+      ]},
+      { topic: 'services', prompt: 'Users connect to mail.company.com instead of server17. Which service-design principle does this demonstrate?', choices: [
+        { text: 'Machine independence through a stable, function-based name.', isCorrect: true, explanation: 'The service can move to new hardware without requiring every client to learn a new hostname.' },
+        { text: 'Restricted access to production servers.', explanation: 'Naming does not control who may log in to the server.' },
+        { text: 'Vendor relations.', explanation: 'This choice is about client addressing and migration, not vendor consultation.' },
+        { text: 'Dynamic workstation leases.', explanation: 'A service name may use DNS, but this design principle is not DHCP lease management.' }
+      ]},
+      { topic: 'services', prompt: 'Why prefer open, documented protocols and file formats when they meet requirements?', choices: [
+        { text: 'They improve interoperability and reduce dependence on one vendor’s ecosystem.', isCorrect: true, explanation: 'Open standards make it easier to support varied clients and change products later.' },
+        { text: 'They guarantee the service has no security vulnerabilities.', explanation: 'Openness supports interoperability; security still requires sound design and maintenance.' },
+        { text: 'They remove the need to plan operating costs.', explanation: 'Every service still needs budget and lifecycle planning.' },
+        { text: 'They ensure every client uses identical hardware.', explanation: 'Open protocols help different systems communicate; they do not require identical devices.' }
+      ]},
+      { topic: 'services', prompt: 'A design has several unnecessary moving parts that increase failure risk. Which principle most directly suggests simplifying it?', choices: [
+        { text: 'Simplicity: satisfy real requirements with the simplest workable design.', isCorrect: true, explanation: 'Fewer unnecessary components are easier to maintain, expand, integrate, and keep reliable.' },
+        { text: 'Vendor relations: purchase more add-on products.', explanation: 'More products may add complexity and do not address unnecessary design requirements.' },
+        { text: 'Machine independence: assign each feature a different hostname.', explanation: 'Host naming does not reduce unnecessary components.' },
+        { text: 'Operational requirements: ignore scalability.', explanation: 'Requirements should be understood and met, not ignored.' }
+      ]},
+      { topic: 'services', prompt: 'Who should normally have direct login access to production service hosts?', choices: [
+        { text: 'Only administrators responsible for that service, through controlled access.', isCorrect: true, explanation: 'Restricted access reduces accidental changes and narrows accountability.' },
+        { text: 'Every employee, so anyone can fix an issue.', explanation: 'Broad access increases operational and security risk; support should follow ownership and escalation.' },
+        { text: 'Only the vendor’s sales team.', explanation: 'Sales staff are not the service operators and should not receive routine production access.' },
+        { text: 'No administrators under any circumstances.', explanation: 'Responsible administrators need an authorized operational access path.' }
+      ]},
+      { topic: 'datacenter', prompt: 'Why should a disaster-recovery site be geographically separated from the primary site?', choices: [
+        { text: 'To reduce the chance that one regional hazard disables both locations.', isCorrect: true, explanation: 'Geographic separation helps avoid common-cause failures such as the same storm or flood.' },
+        { text: 'To avoid testing failover.', explanation: 'A separate site still needs regular tests to prove it can take over.' },
+        { text: 'To make all network paths longer.', explanation: 'Distance may affect latency, but that is not the resilience reason for separation.' },
+        { text: 'To eliminate the need for backups.', explanation: 'A second site does not replace backups or restore testing.' }
+      ]},
+      { topic: 'datacenter', prompt: 'What is the purpose of arranging hot and cold aisles in a server room?', choices: [
+        { text: 'Direct cool air to equipment intakes and collect the hot exhaust separately.', isCorrect: true, explanation: 'Separating intake and exhaust air reduces mixing and improves cooling efficiency.' },
+        { text: 'Separate network cables from employee desks.', explanation: 'Aisle layout is primarily about airflow, not desk cabling.' },
+        { text: 'Keep all servers powered off during maintenance.', explanation: 'The layout controls airflow and does not define power state.' },
+        { text: 'Replace environmental monitoring.', explanation: 'Aisles help cooling, but temperature and humidity still need appropriate monitoring.' }
+      ]},
+      { topic: 'datacenter', prompt: 'Why are individual access credentials and entry logs preferable to a shared numeric door code?', choices: [
+        { text: 'They make access attributable to a person and easier to review.', isCorrect: true, explanation: 'Individual controls improve accountability and support investigation of access events.' },
+        { text: 'They automatically cool the room.', explanation: 'Physical access controls do not manage environmental conditions.' },
+        { text: 'They make all visitors authorized by default.', explanation: 'Access must still be restricted to people with a legitimate need.' },
+        { text: 'They replace fire and building codes.', explanation: 'Access control is only one part of facility safety and compliance.' }
+      ]},
+      { topic: 'datacenter', prompt: 'What should a facility plan define about UPS and generator capacity?', choices: [
+        { text: 'Required load and how long systems must remain powered during an outage or transfer.', isCorrect: true, explanation: 'Runtime, load, and transfer behavior determine whether the power design meets service needs.' },
+        { text: 'Only the color of the power cables.', explanation: 'Labels help operations but do not size backup capacity.' },
+        { text: 'That every server can run indefinitely without utility power.', explanation: 'Backup systems have finite capacity and runtime that must be planned.' },
+        { text: 'That cooling is unnecessary when a generator is installed.', explanation: 'Power continuity does not remove the need for cooling.' }
+      ]},
+      { topic: 'recovery', prompt: 'What is the central purpose of risk analysis in disaster recovery planning?', choices: [
+        { text: 'Estimate plausible threats, likelihood, and impact so mitigation spending can be prioritized.', isCorrect: true, explanation: 'Risk analysis connects threat exposure and business consequences to proportionate controls.' },
+        { text: 'Guarantee that no disaster will occur.', explanation: 'Analysis can inform risk reduction but cannot eliminate every hazard.' },
+        { text: 'Choose the most expensive recovery option for every system.', explanation: 'Controls should be proportionate to impact, obligations, and cost.' },
+        { text: 'Replace business continuity and incident communication plans.', explanation: 'Risk analysis informs the plans; it does not replace recovery procedures or communications.' }
+      ]},
+      { topic: 'recovery', prompt: 'Which statement best describes data integrity?', choices: [
+        { text: 'Data remains accurate and is not changed improperly, whether by accident or attack.', isCorrect: true, explanation: 'Integrity concerns correctness and unauthorized or unintended modification.' },
+        { text: 'A service is always reachable by every user.', explanation: 'That describes availability, not integrity.' },
+        { text: 'The server has two power supplies.', explanation: 'Redundant power may improve availability but does not ensure data correctness.' },
+        { text: 'The organization has purchased an off-site office.', explanation: 'An alternate work location can support continuity but does not define data integrity.' }
+      ]},
+      { topic: 'recovery', prompt: 'A team has backups but has never tested restoring them. What is the most important gap?', choices: [
+        { text: 'They do not know whether the backups can restore critical systems within the required time.', isCorrect: true, explanation: 'Restore tests reveal missing data, dependencies, access, and timing assumptions before an incident.' },
+        { text: 'They have too many documented procedures.', explanation: 'Documentation is useful; the missing evidence is a successful restore test.' },
+        { text: 'They need to replace all backups with redundant power.', explanation: 'Power redundancy does not recover lost or corrupted data.' },
+        { text: 'They must stop identifying critical services.', explanation: 'Criticality guides recovery order and should remain explicit.' }
+      ]},
+      { topic: 'recovery', prompt: 'What is the best way to handle media communication during a major outage?', choices: [
+        { text: 'Predefine authorized spokespeople, approval boundaries, and a backup decision chain.', isCorrect: true, explanation: 'Preparation avoids improvised, conflicting statements during a crisis.' },
+        { text: 'Allow any employee to speculate publicly as events unfold.', explanation: 'Uncoordinated statements can disclose inaccurate information and damage trust.' },
+        { text: 'Wait until a disaster begins to choose a spokesperson.', explanation: 'The plan should establish responsibilities before time-critical decisions arise.' },
+        { text: 'Share all security details immediately with no review.', explanation: 'Communication should be timely but coordinated with incident, legal, and safety needs.' }
+      ]},
+      { topic: 'recovery', prompt: 'Which control most directly supports restoring an earlier valid copy after accidental deletion or corruption?', choices: [
+        { text: 'A protected backup with a tested restore procedure.', isCorrect: true, explanation: 'Backups provide a recoverable prior state, and testing verifies that restoration works.' },
+        { text: 'A mirrored boot disk.', explanation: 'A boot mirror protects against a boot-drive failure, not necessarily deleted or corrupted data.' },
+        { text: 'A generic hostname for the service.', explanation: 'Stable naming eases migration but does not restore data.' },
+        { text: 'A door-entry log.', explanation: 'Physical access logs support accountability, not data restoration.' }
+      ]}
+    ];
+
+    questions.push(
+      { topic: 'team', prompt: 'Which staffing choice is most likely to reduce sustained service risk when a new platform requires specialized skills but the team is still at a manageable workload?', choices: [
+        { text: 'Cross-train current staff and add a focused specialist or consultant while monitoring demand.', isCorrect: true, explanation: 'This closes the skill gap without overcommitting to a permanent structural change.' },
+        { text: 'Immediately expand the entire team by hiring only junior generalists.', explanation: 'Generalists do not by themselves solve a specialized skills gap.' },
+        { text: 'Move all support to a single department with no shared standards.', explanation: 'This fragments support and weakens coordination.' },
+        { text: 'Stop tracking ticket trends until morale improves.', explanation: 'A lack of measurement makes planning harder, not easier.' }
+      ]},
+      { topic: 'team', prompt: 'What is the best reason to keep a centralized helpdesk with well-defined escalation rules?', choices: [
+        { text: 'It creates a single front door for intake and a predictable path to experts.', isCorrect: true, explanation: 'Clear triage reduces confusion and speeds issue resolution.' },
+        { text: 'It allows any user to bypass specialist teams at any time.', explanation: 'Bypassing triage reduces accountability and control.' },
+        { text: 'It guarantees every issue will be solved without specialist input.', explanation: 'Escalation is still needed for complex problems.' },
+        { text: 'It removes the need for customer communication.', explanation: 'Support quality still depends on communication.' }
+      ]},
+      { topic: 'team', prompt: 'Which outcome is most consistent with a healthy hybrid support model?', choices: [
+        { text: 'Local customer relationships are preserved while standards and infrastructure are governed centrally.', isCorrect: true, explanation: 'This blends local responsiveness with enterprise consistency.' },
+        { text: 'Every department manages its own security independently with no common baseline.', explanation: 'This creates inconsistent control and oversight.' },
+        { text: 'A central team never communicates directly with business units.', explanation: 'Excluding local needs weakens service quality.' },
+        { text: 'The helpdesk solves all production problems directly.', explanation: 'Some cases require deeper expertise and proper escalation.' }
+      ]},
+      { topic: 'workstations', prompt: 'What is the main reason to maintain a standard workstation image?', choices: [
+        { text: 'It makes each deployment reproducible and easier to validate, update, and recover.', isCorrect: true, explanation: 'A standard image reduces variation and speeds problem diagnosis.' },
+        { text: 'It eliminates the need to test updates before rollout.', explanation: 'Standardization reduces drift but does not remove testing.' },
+        { text: 'It guarantees that every laptop has the same battery life.', explanation: 'Hardware differences still affect battery performance.' },
+        { text: 'It replaces the need for monitoring or service ownership.', explanation: 'The image is only one part of a healthy operating model.' }
+      ]},
+      { topic: 'workstations', prompt: 'A machine cannot reach the patch server during the maintenance window. What is the best operational response?', choices: [
+        { text: 'Let the endpoint retry later or check in on a scheduled interval.', isCorrect: true, explanation: 'A reconnect strategy preserves compliance without constant manual intervention.' },
+        { text: 'Treat the machine as secure because it was offline.', explanation: 'Offline devices may remain vulnerable or unpatched.' },
+        { text: 'Delete all local software to force a clean reinstall.', explanation: 'That is a destructive workaround, not a safe policy.' },
+        { text: 'Wait for the user to notice missing features and report them.', explanation: 'This is reactive and may leave security gaps open.' }
+      ]},
+      { topic: 'workstations', prompt: 'Which practice most directly supports predictable workstation refresh cycles?', choices: [
+        { text: 'Track lifecycle states and plan replacements, rebuilds, and retirements using standard procedures.', isCorrect: true, explanation: 'Lifecycle management drives repeatable refresh and reduces surprise failures.' },
+        { text: 'Replace the system only when an employee complains formally.', explanation: 'This can delay maintenance and increase risk.' },
+        { text: 'Ignore the hardware warranty and use only manual fixes.', explanation: 'Warranty and standard processes support accountability and lifecycle control.' },
+        { text: 'Install software manually on every machine forever.', explanation: 'This increases drift and support cost.' }
+      ]},
+      { topic: 'workstations', prompt: 'Why is configuration drift a serious problem in a large endpoint fleet?', choices: [
+        { text: 'Small differences multiply into support complexity, inconsistent security, and uneven performance.', isCorrect: true, explanation: 'Drift makes troubleshooting harder and can hide true root causes.' },
+        { text: 'It increases the value of vendor marketing.', explanation: 'Untargeted drift is operational, not marketing, risk.' },
+        { text: 'It guarantees every device will be unique and therefore easier to monitor.', explanation: 'Variation does not improve manageability.' },
+        { text: 'It is prevented naturally by software updates alone.', explanation: 'Updates help but do not replace a standard base configuration.' }
+      ]},
+      { topic: 'servers', prompt: 'Why do server platforms commonly include hardware management features such as remote console, sensor monitoring, and hot-swappable components?', choices: [
+        { text: 'To support high availability and easier repair without requiring a full service interruption.', isCorrect: true, explanation: 'These features reduce downtime and support service continuity.' },
+        { text: 'To guarantee that no software changes are needed.', explanation: 'Hardware features do not replace software maintenance.' },
+        { text: 'To eliminate the need for data backups.', explanation: 'Availability and backup are separate requirements.' },
+        { text: 'To replace the operating system with a hardware-only service model.', explanation: 'Servers still need software and management.' }
+      ]},
+      { topic: 'servers', prompt: 'A server’s boot drive fails. Which design feature most directly helps keep services running?', choices: [
+        { text: 'A redundant boot or mirrored drive arrangement with a tested recovery process.', isCorrect: true, explanation: 'Redundancy helps avoid single-point failures in critical boot paths.' },
+        { text: 'A printed server inventory list.', explanation: 'Inventory helps administration but does not keep the system online.' },
+        { text: 'A static IP assigned to every client.', explanation: 'This is unrelated to boot-drive resilience.' },
+        { text: 'An email archive.', explanation: 'It helps data retention but not the boot path.' }
+      ]},
+      { topic: 'servers', prompt: 'Which statement best distinguishes redundancy from backup?', choices: [
+        { text: 'Redundancy helps keep a service running, while a backup helps restore an earlier state after corruption or loss.', isCorrect: true, explanation: 'Availability and recovery are related but not equivalent controls.' },
+        { text: 'Redundancy always means a complete data copy and nothing else.', explanation: 'Redundancy is often about components or paths, not full data restoration.' },
+        { text: 'Backup is only for power failures and never for corruption.', explanation: 'Backups address many data-loss scenarios, not just power.' },
+        { text: 'Server redundancy means the server has no need for monitoring.', explanation: 'Monitoring remains critical even with redundancy.' }
+      ]},
+      { topic: 'servers', prompt: 'Which operational strategy is most useful when many identical low-priority servers need replacement or repair without high business impact?', choices: [
+        { text: 'Use a standard spare or swap-in model and let the service recover quickly when a unit fails.', isCorrect: true, explanation: 'Swap-in strategies reduce repair time and cost for commodity services.' },
+        { text: 'Keep each server in a custom configuration so it always matches the original use.', explanation: 'Custom variation increases complexity and cost.' },
+        { text: 'Run every server with no monitoring to avoid operator overhead.', explanation: 'This increases risk and reduces visibility.' },
+        { text: 'Require every failure to be repaired on site by a vendor before restart.', explanation: 'This slows recovery and raises downtime for simple failures.' }
+      ]},
+      { topic: 'services', prompt: 'Which design choice best demonstrates a service-oriented naming model?', choices: [
+        { text: 'Users access mail.company.com while the backend host remains server17 internally.', isCorrect: true, explanation: 'The service name hides implementation details and supports stable user access.' },
+        { text: 'Each application uses a different random hostname every week.', explanation: 'Changing hostnames does not improve service architecture.' },
+        { text: 'Users always connect to a raw IP address for every service.', explanation: 'IP addresses are not stable, user-friendly service endpoints.' },
+        { text: 'Services are identified only by a vendor logo and not by a DNS name.', explanation: 'This is not a service design principle and reduces clarity.' }
+      ]},
+      { topic: 'services', prompt: 'Why is it usually better to use documented standards and open protocols when they satisfy requirements?', choices: [
+        { text: 'They help interoperability, reduce lock-in, and make support and migration easier.', isCorrect: true, explanation: 'Open, documented choices support portability and clearer operations.' },
+        { text: 'They are automatically more secure than any proprietary system.', explanation: 'Open protocols are not automatically more secure.' },
+        { text: 'They remove the need to monitor the service.', explanation: 'Standards do not replace operational visibility.' },
+        { text: 'They require every customer to know the implementation socket details.', explanation: 'Good service design keeps the interface stable, not exposed in the user workflow.' }
+      ]},
+      { topic: 'services', prompt: 'Which principle is most violated by a design that adds several layers of unnecessary custom scripts and manual hand-offs?', choices: [
+        { text: 'Keep it simple; remove unnecessary moving parts.', isCorrect: true, explanation: 'Unnecessary complexity adds failure points and support overhead.' },
+        { text: 'Use an internal-only standard with no documentation.', explanation: 'This produces ambiguity rather than simpler operations.' },
+        { text: 'Constrain all changes to a single vendor platform.', explanation: 'Vendor lock-in is a design risk, not a simplification principle.' },
+        { text: 'Hide failures until a severe outage occurs.', explanation: 'This is opposite to sound operations practice.' }
+      ]},
+      { topic: 'services', prompt: 'Which access model best follows the principle of least privilege?', choices: [
+        { text: 'Only designated operators for each production service hold the needed access under audit and approval.', isCorrect: true, explanation: 'Least privilege narrows access to the minimum needed for responsibility.' },
+        { text: 'Every employee receives all production passwords to speed fixes.', explanation: 'This broadens access and creates new risk.' },
+        { text: 'Only the finance department can restart critical services.', explanation: 'Operations and support require service-specific access, not financial ownership.' },
+        { text: 'No one may be granted access because all work should be done by users.', explanation: 'There must still be authorized operational access for responsible administrators.' }
+      ]},
+      { topic: 'datacenter', prompt: 'Which facility factor most directly improves system resilience when a weather event or local utility issue strikes?', choices: [
+        { text: 'A recovery site and critical systems in separate geographic locations.', isCorrect: true, explanation: 'Geographic separation reduces common-cause disruption risk between primary and secondary sites.' },
+        { text: 'A larger break room and more chairs for staff.', explanation: 'This helps comfort but not resilience.' },
+        { text: 'A full backup of every cable in the same room.', explanation: 'Colocating backups with the primary site does not reduce regional hazard risk.' },
+        { text: 'Longer hallway signs for visitors.', explanation: 'This is not a resilience control.' }
+      ]},
+      { topic: 'datacenter', prompt: 'What is the most important reason to monitor environmental conditions in a machine room?', choices: [
+        { text: 'Heat, humidity, and air flow problems can damage equipment or cause outages before staff notice.', isCorrect: true, explanation: 'Environmental drift can silently degrade hardware if not monitored.' },
+        { text: 'Monitoring is only needed when a new server is installed.', explanation: 'Operational conditions change over time.' },
+        { text: 'Monitoring replaces backup power systems.', explanation: 'Monitoring is not a substitute for UPS or generators.' },
+        { text: 'It is required only for branch offices, not central data centers.', explanation: 'All critical facilities need environmental control and monitoring.' }
+      ]},
+      { topic: 'datacenter', prompt: 'Why are distinct hot and cold aisles used in a server room layout?', choices: [
+        { text: 'They improve cooling efficiency by separating intake and exhaust air paths.', isCorrect: true, explanation: 'This helps equipment intake remain cool and works with airflow design.' },
+        { text: 'They satisfy licensing rules for every rack.', explanation: 'This is not the main purpose.' },
+        { text: 'They automatically store spare parts near each server.', explanation: 'Inventory location is separate from airflow design.' },
+        { text: 'They guarantee no data center outage will occur.', explanation: 'Airflow design improves cooling but cannot prevent all failures.' }
+      ]},
+      { topic: 'datacenter', prompt: 'Which access-control choice is most consistent with good physical security practice?', choices: [
+        { text: 'Individual credentials and logged access with reviewable records.', isCorrect: true, explanation: 'This supports accountability and auditability.' },
+        { text: 'One shared numeric lock code for all staff.', explanation: 'This weakens attribution and review.' },
+        { text: 'Giving the custodial staff unrestricted access to all racks.', explanation: 'Routine physical access should still be limited by role and need.' },
+        { text: 'Allowing visitors to enter without approval during business hours.', explanation: 'This fails the principle of controlled, authorized access.' }
+      ]},
+      { topic: 'recovery', prompt: 'Which action best reduces the chance that a small incident becomes a major outage?', choices: [
+        { text: 'Conduct a risk analysis and prioritize controls based on impact and likelihood.', isCorrect: true, explanation: 'Risk analysis helps target scarce resources to the most material threats.' },
+        { text: 'Treat every threat as equally likely and universally catastrophic.', explanation: 'This is expensive and not proportionate.' },
+        { text: 'Skip continuity planning because incidents are rare.', explanation: 'Planning is most necessary precisely when stakes are high.' },
+        { text: 'Use the largest budget for each system regardless of criticality.', explanation: 'This can misallocate scarce funds and reduce effective resilience.' }
+      ]},
+      { topic: 'recovery', prompt: 'Which statement best characterizes data integrity?', choices: [
+        { text: 'The information remains correct and is not changed improperly by accident or attack.', isCorrect: true, explanation: 'Integrity focuses on correctness and unauthorized or unintended modification.' },
+        { text: 'A system always remains available to all users.', explanation: 'That is availability, not integrity.' },
+        { text: 'An outage has been prevented by a backup site.', explanation: 'This may improve resilience but not data correctness.' },
+        { text: 'Recovery procedures have been written down for every service.', explanation: 'Documentation is helpful, but it does not define data integrity.' }
+      ]},
+      { topic: 'recovery', prompt: 'Why is a restore test more valuable than simply having a backup on a shelf?', choices: [
+        { text: 'It proves that the backup can actually recover the needed system within business constraints.', isCorrect: true, explanation: 'Backup quality is proven by successful, timed restoration.' },
+        { text: 'It reduces the cost of recording backup media.', explanation: 'Restore testing is operational validation, not a storage cost control.' },
+        { text: 'It guarantees no backup media will ever fail.', explanation: 'Testing reduces uncertainty but does not provide absolute guarantees.' },
+        { text: 'It eliminates the need for a recovery team.', explanation: 'A real recovery process still needs clear ownership and practice.' }
+      ]},
+      { topic: 'recovery', prompt: 'During a major outage, which communication approach best manages public and internal expectations?', choices: [
+        { text: 'Predefine authorized spokespeople, approval rules, and alternate communication paths.', isCorrect: true, explanation: 'This creates a consistent message and reduces harmful rumor.' },
+        { text: 'Let everyone post updates from memory without coordination.', explanation: 'This creates conflicting and possibly unsafe statements.' },
+        { text: 'Wait until recovery is complete before announcing anything.', explanation: 'This can leave stakeholders uninformed during a critical period.' },
+        { text: 'Share only technical details with no business context.', explanation: 'This can confuse stakeholders and limit trust.' }
+      ]},
+      { topic: 'recovery', prompt: 'What is the most direct control for recovering an earlier valid copy after accidental deletion or corruption?', choices: [
+        { text: 'A protected backup with a tested restore process.', isCorrect: true, explanation: 'Backups provide a recoverable state; testing proves the process works.' },
+        { text: 'A duplicate printer in the same room.', explanation: 'This supports office continuity, not data restoration.' },
+        { text: 'A stronger firewall rule set.', explanation: 'That helps security but not recovery from deleted data.' },
+        { text: 'A more frequent server maintenance schedule.', explanation: 'Maintenance helps reliability but does not replace backup restoration.' }
+      ]},
+      { topic: 'recovery', prompt: 'Which recovery action best reflects a priority-based continuity plan?', choices: [
+        { text: 'Restore the most critical services first based on business impact, dependencies, and customer risk.', isCorrect: true, explanation: 'Priority ordering speeds recovery of the most important services.' },
+        { text: 'Recover every system at once regardless of business value.', explanation: 'This can overload the team and slow the most important work.' },
+        { text: 'Recover all systems in the order they were originally installed.', explanation: 'Installation order is not the same as business importance.' },
+        { text: 'Wait for a complete database backup before restoring email.', explanation: 'This can delay recovery unnecessarily if a pragmatic order is possible.' }
+      ]},
+      { topic: 'team', type: 'essay', points: 5, prompt: 'A company is growing from 200 to 800 employees and wants a stable SA model. Describe a support structure that balances local responsiveness with central standards. Include how staffing, escalation, and governance would work.', rationale: 'Strong essays identify ownership, support tiers, staffing strategies, and shared standards without overloading one team.', modelAnswer: 'Use a hybrid model: provide department-facing support contacts who understand local needs, while a central IT organization owns shared infrastructure, security baselines, tooling, and service standards. Size the team using ticket trends, endpoint and server counts, service hours, complexity, and criticality rather than a fixed staff-to-user ratio. A central helpdesk should log and triage requests, resolve common issues, and escalate specialist work through documented ownership and response targets. Review service levels and demand with department representatives so local priorities inform central planning without duplicating core services.' },
+      { topic: 'workstations', type: 'essay', points: 5, prompt: 'Explain why a workstation update plan must differ from an initial OS installation. Discuss device reachability, rollback, staged rollout, and user impact in your answer.', rationale: 'Good answers connect update design to active endpoints, risk control, and ongoing service continuity.', modelAnswer: 'An initial OS installation starts from a known build process, but an update changes devices already in use, with active users and potentially different configurations. Roll updates out in stages (one, some, many), monitoring compatibility, failures, and support demand before expanding deployment. Laptops that are offline need retry or endpoint-initiated check-in behavior so they can catch up when reachable. Schedule disruptive work appropriately, notify users, and provide a tested rollback or recovery path for updates that cause problems. Track results so failed or unreachable devices are not mistakenly reported as compliant.' },
+      { topic: 'services', type: 'essay', points: 5, prompt: 'A production service is becoming difficult to maintain because it depends on too many custom integrations and manual steps. Explain how service design principles would guide simplification, accountability, and operational stability.', rationale: 'Strong essays explain reducing unnecessary complexity, codifying interfaces, and defining explicit operational ownership.', modelAnswer: 'First document the service requirements, dependencies, owners, and failure modes. Remove integrations and manual hand-offs that do not meet a real requirement, then prefer simple, documented interfaces and open standards where suitable. Assign a named service owner and limit production access to authorized operators using controlled, auditable procedures. Automate repeatable tasks, monitor the service and its dependencies, and test changes before release. Keep recovery and escalation procedures current so a simpler design is also supportable and accountable.' },
+      { topic: 'recovery', type: 'essay', points: 5, prompt: 'Write a short disaster-recovery plan for a critical service. Identify the primary risks, the recovery order, the communication plan, and the validation steps you would require before declaring service restored.', rationale: 'High-scoring responses connect business impact, recovery priorities, tested restores, and disciplined communications.', modelAnswer: 'Assess likely threats and business impact, including regional hazards, infrastructure failure, data loss, and cyber incidents. Define recovery priorities and dependencies with business owners, then restore the most critical service components and data first using protected backups or a geographically separate recovery site as appropriate. Assign incident leadership and authorized spokespeople, with an approval path and regular updates for staff and affected customers. Before declaring recovery complete, verify data integrity, application functionality, access controls, monitoring, and dependent services; record the outcome and follow up on any gaps found during the exercise.' }
+    );
+
+    questions.forEach((question, index) => { question.id = `${question.topic}-${index + 1}`; });
+
+    const storageKey = 'sysad-study-desk-v1';
+    const loadState = () => {
+      try { return JSON.parse(localStorage.getItem(storageKey)) || {}; }
+      catch { return {}; }
+    };
+    const state = loadState();
+    state.completed ||= [];
+    state.missed ||= [];
+    state.answers ||= {};
+    let activeTopic = topics[0].id;
+    let quizSet = [];
+    let quizIndex = 0;
+    let quizAnswers = [];
+
+    function saveState() {
+      try { localStorage.setItem(storageKey, JSON.stringify(state)); } catch { /* Storage can be unavailable in private browsing. */ }
+    }
+    function setView(viewName) {
+      document.querySelectorAll('.tab').forEach((tab) => tab.setAttribute('aria-selected', String(tab.id === `${viewName}-tab`)));
+      document.querySelectorAll('.view').forEach((view) => view.classList.toggle('active', view.id === `${viewName}-view`));
+      if (viewName === 'review') renderReview();
+    }
+    document.querySelectorAll('.tab').forEach((tab) => tab.addEventListener('click', () => {
+      const viewName = tab.id.replace('-tab', '');
+      if (viewName === 'quiz' && !quizSet.length) startQuiz(filter.value);
+      else setView(viewName);
+    }));
+
+    function getQuizTotals() {
+      const mcTotal = questions.filter((question) => question.type !== 'essay').length;
+      const essayTotal = questions.reduce((sum, question) => sum + (question.type === 'essay' ? Number(question.points || 0) : 0), 0);
+      const mcCorrect = quizSet.filter((question, index) => question.type !== 'essay' && quizAnswers[index] !== null && question.choices[quizAnswers[index]].isCorrect).length;
+      const essayEarned = quizSet.reduce((sum, question, index) => {
+        if (question.type !== 'essay') return sum;
+        const answer = quizAnswers[index];
+        return sum + (answer && typeof answer === 'object' && typeof answer.score === 'number' ? answer.score : 0);
+      }, 0);
+      return { mcTotal, essayTotal, mcCorrect, essayEarned };
+    }
+    function updateProgress() {
+      const count = state.completed.length;
+      const mcCount = questions.filter((question) => question.type !== 'essay').length;
+      const essayCount = questions.filter((question) => question.type === 'essay').length;
+      document.getElementById('progress-count').textContent = `${count} / ${topics.length}`;
+      document.getElementById('progress-fill').style.width = `${count / topics.length * 100}%`;
+      document.querySelector('.progress-track').setAttribute('aria-valuenow', count);
+      document.getElementById('progress-label').textContent = count === topics.length ? 'All units complete. Keep the concepts sharp with a quiz.' : `${topics.length - count} ${topics.length - count === 1 ? 'unit' : 'units'} left in your course map.`;
+      document.getElementById('quiz-count').textContent = `(${mcCount} MC + ${essayCount} essays)`;
+      renderTopicLinks();
+    }
+    function renderTopicLinks() {
+      const links = document.getElementById('topic-links');
+      links.innerHTML = topics.map((topic, index) => `<button class="topic-link" type="button" data-topic="${topic.id}" aria-current="${activeTopic === topic.id ? 'page' : 'false'}"><span class="topic-number">0${index + 1}</span><span>${topic.short}</span><span class="topic-check" aria-label="${state.completed.includes(topic.id) ? 'Complete' : ''}">${state.completed.includes(topic.id) ? '✓' : ''}</span></button>`).join('');
+      links.querySelectorAll('[data-topic]').forEach((button) => button.addEventListener('click', () => showTopic(button.dataset.topic)));
+    }
+    function showTopic(id) {
+      activeTopic = id;
+      const topic = topics.find((item) => item.id === id);
+      document.getElementById('article-kicker').textContent = topic.kicker;
+      document.getElementById('article-title').textContent = topic.title;
+      document.getElementById('article-body').innerHTML = topic.html;
+      const button = document.getElementById('complete-button');
+      const done = state.completed.includes(id);
+      button.textContent = done ? 'Completed ✓' : 'Mark unit complete';
+      button.classList.toggle('done', done);
+      button.setAttribute('aria-pressed', String(done));
+      renderTopicLinks();
+    }
+    document.getElementById('complete-button').addEventListener('click', () => {
+      const index = state.completed.indexOf(activeTopic);
+      if (index >= 0) state.completed.splice(index, 1);
+      else state.completed.push(activeTopic);
+      saveState();
+      updateProgress();
+      showTopic(activeTopic);
+    });
+
+    const filter = document.getElementById('topic-filter');
+    filter.insertAdjacentHTML('beforeend', topics.map((topic) => `<option value="${topic.id}">${topic.short}</option>`).join(''));
+    filter.addEventListener('change', () => startQuiz(filter.value));
+    function shuffle(items) {
+      const copy = [...items];
+      for (let index = copy.length - 1; index > 0; index--) {
+        const other = Math.floor(Math.random() * (index + 1));
+        [copy[index], copy[other]] = [copy[other], copy[index]];
+      }
+      return copy;
+    }
+    function startQuiz(topicId = filter.value, selectedQuestions = null) {
+      const available = selectedQuestions || questions.filter((question) => topicId === 'all' || question.topic === topicId);
+      quizSet = shuffle(available);
+      quizIndex = 0;
+      quizAnswers = quizSet.map(() => null);
+      setView('quiz');
+      renderQuestion();
+    }
+    function renderQuestion() {
+      const container = document.getElementById('quiz-content');
+      if (!quizSet.length) {
+        container.innerHTML = `<div class="empty-state"><h3>No questions in this set yet.</h3><p>Choose another topic or return to the full quiz.</p><button class="primary-button" id="all-questions" type="button">Start all questions</button></div>`;
+        document.getElementById('all-questions').addEventListener('click', () => { filter.value = 'all'; startQuiz('all'); });
+        return;
+      }
+      if (quizIndex >= quizSet.length) { renderQuizResult(); return; }
+      const question = quizSet[quizIndex];
+      const topic = topics.find((item) => item.id === question.topic);
+      const chosen = quizAnswers[quizIndex];
+      const { mcTotal, essayTotal, mcCorrect, essayEarned } = getQuizTotals();
+      const totalScore = mcCorrect + essayEarned;
+      const totalPossible = mcTotal + essayTotal;
+      const answeredCount = quizAnswers.filter((answer) => answer !== null && (typeof answer !== 'string' || answer.trim().length > 0)).length;
+      if (question.type === 'essay') {
+        const submitted = chosen !== null && typeof chosen === 'object';
+        const essayValue = submitted ? chosen.response : (typeof chosen === 'string' ? chosen : '');
+        const essayScore = submitted && typeof chosen.score === 'number' ? chosen.score : null;
+        container.innerHTML = `
+          <section class="question-panel" aria-label="Quiz essay question">
+            <div class="question-meta"><span class="topic-chip">${topic.short}</span><span>Essay ${quizIndex + 1} of ${quizSet.length} · ${question.points} pts</span></div>
+            <h3>${question.prompt}</h3>
+            <label class="sr-only" for="essay-response">Essay response</label>
+            <textarea id="essay-response" class="essay-answer" aria-label="Essay response" placeholder="Write a clear, complete answer here..." ${submitted ? 'readonly' : ''}></textarea>
+            ${submitted ? `<div class="feedback show" role="status"><strong>Sample answer</strong><p>${question.modelAnswer}</p><p><b>Compare:</b> This is a sample, not the only acceptable wording. Check whether your response covered the main concepts in the prompt.</p></div><div class="question-actions"><button class="quiet-button" id="essay-needs-work" type="button" ${essayScore === 0 ? 'aria-pressed="true"' : ''}>Needs review · 0/${question.points}</button><button class="primary-button" id="essay-meets-criteria" type="button" ${essayScore === question.points ? 'aria-pressed="true"' : ''}>I covered the key points · ${question.points}/${question.points}</button></div>` : '<div class="feedback show" role="status"><strong>Essay guidance</strong><p>Write your response first. Submit it to reveal a sample answer, then compare and self-assess it. Essays are not automatically graded.</p></div>'}
+            <div class="question-actions"><button class="quiet-button" id="restart-quiz" type="button">Restart set</button>${submitted ? `<button class="primary-button" id="next-question" type="button" ${essayScore === null ? 'disabled' : ''}>${quizIndex === quizSet.length - 1 ? 'See results' : 'Next question'} →</button>` : `<button class="primary-button" id="submit-essay" type="button" disabled>Submit &amp; see sample answer</button>`}</div>
+          </section>
+          <aside class="score-panel" aria-label="Quiz progress"><h3>Your run</h3><p class="score-number">${totalScore}<span style="font: 15px var(--body); color: var(--muted)"> / ${totalPossible}</span></p><p class="score-caption">points so far</p><div class="score-line"><span>MC correct</span><b>${mcCorrect}/${mcTotal}</b></div><div class="score-line"><span>Essay points</span><b>${essayEarned}/${essayTotal}</b></div><div class="score-line"><span>To go</span><b>${quizSet.length - quizIndex}</b></div></aside>`;
+        const essayInput = document.getElementById('essay-response');
+        essayInput.value = essayValue;
+        if (!submitted) {
+          essayInput.addEventListener('input', () => {
+            quizAnswers[quizIndex] = essayInput.value;
+            document.getElementById('submit-essay').disabled = essayInput.value.trim().length === 0;
+          });
+          document.getElementById('submit-essay').addEventListener('click', () => {
+            const response = essayInput.value.trim();
+            if (!response) return;
+            quizAnswers[quizIndex] = { response, score: null };
+            state.answers[question.id] = { response, score: null };
+            saveState();
+            renderQuestion();
+          });
+        } else {
+          const setEssayScore = (score) => {
+            quizAnswers[quizIndex] = { response: essayValue, score };
+            state.answers[question.id] = { response: essayValue, score };
+            saveState();
+            renderQuestion();
+          };
+          document.getElementById('essay-needs-work').addEventListener('click', () => setEssayScore(0));
+          document.getElementById('essay-meets-criteria').addEventListener('click', () => setEssayScore(question.points));
+          document.getElementById('next-question').addEventListener('click', () => {
+            if (essayScore !== null) { quizIndex++; renderQuestion(); }
+          });
+        }
+        document.getElementById('restart-quiz').addEventListener('click', () => startQuiz(filter.value));
+        return;
+      }
+      const selectedChoice = chosen === null ? null : question.choices[chosen];
+      const rightChoice = question.choices.find((choice) => choice.isCorrect);
+      const feedback = selectedChoice ? `<div class="feedback show ${selectedChoice.isCorrect ? '' : 'wrong'}" role="status"><strong>${selectedChoice.isCorrect ? 'That’s right.' : 'Not quite. Here’s the distinction.'}</strong><p><b>Your choice:</b> ${selectedChoice.explanation}</p>${selectedChoice.isCorrect ? '' : `<p><b>Best answer: ${rightChoice.text}</b> ${rightChoice.explanation}</p>`}</div>` : '<div class="feedback" id="feedback" role="status"></div>';
+      container.innerHTML = `
+        <section class="question-panel" aria-label="Quiz question">
+          <div class="question-meta"><span class="topic-chip">${topic.short}</span><span>Question ${quizIndex + 1} of ${quizSet.length}</span></div>
+          <h3>${question.prompt}</h3>
+          <div class="answers" role="group" aria-label="Answer choices">${question.choices.map((choice, index) => `<button class="answer ${chosen !== null && choice.isCorrect ? 'is-correct' : ''} ${chosen === index && !choice.isCorrect ? 'is-wrong' : ''}" type="button" data-answer="${index}" ${chosen !== null ? 'disabled' : ''}><span class="answer-letter">${String.fromCharCode(65 + index)}</span><span>${choice.text}</span></button>`).join('')}</div>
+          ${feedback}
+          <div class="question-actions"><button class="quiet-button" id="restart-quiz" type="button">Restart set</button><button class="primary-button" id="next-question" type="button" ${chosen === null ? 'disabled' : ''}>${quizIndex === quizSet.length - 1 ? 'See results' : 'Next question'} →</button></div>
+        </section>
+        <aside class="score-panel" aria-label="Quiz progress"><h3>Your run</h3><p class="score-number">${totalScore}<span style="font: 15px var(--body); color: var(--muted)"> / ${totalPossible}</span></p><p class="score-caption">points so far</p><div class="score-line"><span>MC correct</span><b>${mcCorrect}/${mcTotal}</b></div><div class="score-line"><span>Essay points</span><b>${essayEarned}/${essayTotal}</b></div><div class="score-line"><span>Answered</span><b>${answeredCount}</b></div><div class="question-list" aria-label="Question status">${quizSet.map((_, index) => `<span class="question-dot ${index === quizIndex ? 'current' : ''} ${quizAnswers[index] !== null ? ((quizSet[index].type === 'essay' ? typeof quizAnswers[index] === 'object' && typeof quizAnswers[index].score === 'number' : quizSet[index].choices[quizAnswers[index]].isCorrect) ? 'right' : 'missed') : ''}">${index + 1}</span>`).join('')}</div></aside>`;
+      container.querySelectorAll('[data-answer]').forEach((button) => button.addEventListener('click', () => selectAnswer(Number(button.dataset.answer))));
+      document.getElementById('next-question').addEventListener('click', () => { if (quizAnswers[quizIndex] !== null) { quizIndex++; renderQuestion(); } });
+      document.getElementById('restart-quiz').addEventListener('click', () => startQuiz(filter.value));
+    }
+    function selectAnswer(answerIndex) {
+      const question = quizSet[quizIndex];
+      const choice = question.choices[answerIndex];
+      quizAnswers[quizIndex] = answerIndex;
+      state.answers[question.id] = choice.isCorrect;
+      if (!choice.isCorrect && !state.missed.includes(question.id)) state.missed.push(question.id);
+      if (choice.isCorrect) state.missed = state.missed.filter((id) => id !== question.id);
+      saveState();
+      renderQuestion();
+      document.getElementById('next-question').focus();
+    }
+    function renderQuizResult() {
+      const { mcTotal, essayTotal, mcCorrect, essayEarned } = getQuizTotals();
+      const totalScore = mcCorrect + essayEarned;
+      const totalPossible = mcTotal + essayTotal;
+      const missedIds = quizSet.filter((question, index) => question.type !== 'essay' && quizAnswers[index] !== null && !question.choices[quizAnswers[index]].isCorrect).map((question) => question.id);
+      const essayAnswered = quizSet.filter((question, index) => question.type === 'essay' && quizAnswers[index] && typeof quizAnswers[index] === 'object' && typeof quizAnswers[index].score === 'number').length;
+      const phrase = essayAnswered === quizSet.filter((question) => question.type === 'essay').length ? 'All essays submitted.' : `${essayAnswered} of ${quizSet.filter((question) => question.type === 'essay').length} essay responses submitted.`;
+      document.getElementById('quiz-content').innerHTML = `<div class="empty-state"><p class="section-kicker">Run complete / ${quizSet.length} items</p><h3>You scored ${totalScore} out of ${totalPossible}.</h3><p>${totalScore === totalPossible ? 'Perfect: 50 MC points and 20 essay points are in place.' : `${phrase} ${missedIds.length ? `Review the ${missedIds.length} missed multiple-choice ${missedIds.length === 1 ? 'question' : 'questions'} and refine the essay responses.` : 'Nail down the explanations and try another pass.'}`}</p><div class="question-actions"><button class="quiet-button" id="retry-this" type="button">Retry this set</button>${missedIds.length ? '<button class="primary-button" id="retry-run-missed" type="button">Retry missed questions</button>' : '<button class="primary-button" id="new-run" type="button">New quiz</button>'}</div></div>`;
+      document.getElementById('retry-this').addEventListener('click', () => startQuiz(filter.value));
+      const retryMissed = document.getElementById('retry-run-missed');
+      if (retryMissed) retryMissed.addEventListener('click', () => startQuiz(filter.value, questions.filter((question) => missedIds.includes(question.id))));
+      const newRun = document.getElementById('new-run');
+      if (newRun) newRun.addEventListener('click', () => startQuiz(filter.value));
+    }
+    function renderReview() {
+      const container = document.getElementById('review-content');
+      const missed = questions.filter((question) => state.missed.includes(question.id));
+      document.getElementById('retry-missed').disabled = missed.length === 0;
+      if (!missed.length) {
+        container.innerHTML = `<div class="empty-state"><p class="section-kicker">No open review items</p><h3>Your missed-question list is clear.</h3><p>Take a quiz and any missed concepts will collect here for another round.</p></div>`;
+        return;
+      }
+      container.innerHTML = `<div class="empty-state"><p class="section-kicker">${missed.length} question${missed.length === 1 ? '' : 's'} to revisit</p><h3>Missed questions stay here until you answer them correctly.</h3><p>The retry set shuffles the questions. Each choice includes a reason, and getting an item right removes it from this list.</p></div>`;
+    }
+    document.getElementById('retry-missed').addEventListener('click', () => {
+      const missed = questions.filter((question) => state.missed.includes(question.id));
+      if (missed.length) startQuiz('all', missed);
+    });
+    updateProgress();
+    showTopic(activeTopic);
+    renderReview();
+  </script>
+</body>
+</html>
       color-scheme: light;
       --paper: #f4f2eb;
       --surface: #fffefa;
